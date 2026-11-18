@@ -680,11 +680,46 @@
       font-size: 13px;
       color: var(--text-4);
     }
+    .analyze-bar {
+      margin: -8px 0 20px;
+      max-width: 1720px;
+    }
+    .analyze-bar[hidden] { display: none; }
+    .analyze-track {
+      height: 4px;
+      background: #333;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .analyze-fill {
+      height: 100%;
+      width: 0;
+      background: #f5f5f5;
+      transition: width 80ms linear;
+    }
+    .analyze-label {
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--text-4);
+    }
+    #audio-waveform {
+      width: 100%;
+      height: 72px;
+      display: block;
+      background: #141414;
+      border-radius: 8px;
+      box-shadow: inset 0 0 0 1px var(--border);
+      margin: 8px 0 12px;
+    }
   </style>
 </head>
 <body>
   <div class="page">
     <header class="header" id="header"></header>
+    <div class="analyze-bar" id="analyze-bar" hidden>
+      <div class="analyze-track"><div class="analyze-fill" id="analyze-fill"></div></div>
+      <div class="analyze-label" id="analyze-label">Analysing video…</div>
+    </div>
     <div class="layout">
       <section class="left" id="left"></section>
       <aside class="right" id="right"></aside>
@@ -2588,7 +2623,11 @@ const ROLE_KEY = {
   "pricing": "pricing",
   "cta": "cta",
   "outro": "outro",
-  "other": "other"
+  "other": "other",
+  "intro": "hook",
+  "middle": "feature_reveal",
+  "end": "outro",
+  "scene": "other"
 };
 function roleColor(type) {
   const key = ROLE_KEY[String(type || "other").toLowerCase()] || "other";
@@ -2603,10 +2642,13 @@ function esc(s) {
 }
 function fmtTime(sec) {
   sec = Math.max(0, Number(sec) || 0);
-  const m = Math.floor(sec / 60);
-  const s = Math.floor(sec % 60);
-  const cs = Math.floor((sec % 1) * 100);
-  return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}:${String(cs).padStart(2, "0")}`;
+  const fps = Math.max(1, Math.round((typeof DATA !== "undefined" && DATA && DATA.fps) || (typeof TIME_FPS !== "undefined" && TIME_FPS) || 30));
+  const totalFrames = Math.round(sec * fps);
+  const ff = totalFrames % fps;
+  const totalSec = Math.floor(totalFrames / fps);
+  const m = Math.floor(totalSec / 60);
+  const s = totalSec % 60;
+  return `${m}:${String(s).padStart(2, "0")}:${String(ff).padStart(2, "0")}`;
 }
 function parseStamp(str, fallback) {
   if (typeof fallback === "number") return fallback;
@@ -2636,16 +2678,19 @@ const icons = {
 
 function renderHeader() {
   const d = DATA;
+  const local = !!d.localFile;
   const initial = (d.brand || d.title || "?").trim().charAt(0).toUpperCase();
   const logo = d.brandLogo
     ? `<img src="${esc(d.brandLogo)}" alt="" />`
     : esc(initial);
   document.title = d.title || "Video breakdown";
-  document.getElementById("header").innerHTML = `
-    <span class="brand-mark" aria-hidden="true">${logo}</span>
-    <div class="header-main">
-      <h1>${esc(d.title)}</h1>
-      <p class="meta">
+  const meta = local
+    ? `<p class="meta">
+        <span>${esc(d.brand || "Local file")}</span>
+        <span class="dot-sep">·</span>${esc(d.date)}
+        <span class="dot-sep">·</span><span class="tabular">${esc(d.length)}</span>
+      </p>`
+    : `<p class="meta">
         <a class="brand-link" href="${esc(d.brandUrl || "#")}" target="_blank" rel="noopener">${esc(d.brand)}</a>
         <button type="button" class="follow-btn" id="follow-btn" title="Follow ${esc(d.brand)}">${icons.bell} Follow</button>
         <span class="dot-sep">·</span>${esc(d.date)}
@@ -2656,15 +2701,27 @@ function renderHeader() {
         <span class="q">made </span><span class="who">Team: ${esc(d.madeTeam)}</span>
         <span class="dot-sep">·</span>
         <span class="q">studio </span><span class="who">${esc(d.studio)}</span>
-      </p>
-      <dl class="stats">
-        <div class="stat"><dt>Length</dt><dd class="tabular">${esc(d.stats.length)}</dd></div>
+      </p>`;
+  const stats = local
+    ? `<div class="stat"><dt>Length</dt><dd class="tabular">${esc(d.stats.length)}</dd></div>
+        <div class="stat"><dt>Scenes</dt><dd class="tabular">${esc(d.stats.scenes)}</dd></div>
+        <div class="stat"><dt>Resolution</dt><dd class="tabular">${esc(d.stats.resolution)}</dd></div>
+        <div class="stat"><dt>File size</dt><dd class="tabular">${esc(d.stats.fileSize)}</dd></div>
+        <div class="stat"><dt>Audio</dt><dd class="tabular">${esc(d.stats.audio)}</dd></div>`
+    : `<div class="stat"><dt>Length</dt><dd class="tabular">${esc(d.stats.length)}</dd></div>
         <div class="stat"><dt>Scenes</dt><dd class="tabular">${esc(d.stats.scenes)}</dd></div>
         <div class="stat"><dt>Product on screen</dt><dd class="tabular">${esc(d.stats.productOnScreen)}</dd></div>
         <div class="stat"><dt>Features shown</dt><dd class="tabular">${esc(d.stats.featuresShown)}</dd></div>
         <div class="stat"><dt>Call to action</dt><dd class="tabular">${esc(d.stats.callToAction)}</dd></div>
         <div class="stat"><dt>Voiceover</dt><dd class="tabular">${esc(d.stats.voiceover)}</dd></div>
-        ${d.stats.views ? `<div class="stat"><dt>Views</dt><dd class="tabular">${esc(d.stats.views)}</dd></div>` : ""}
+        ${d.stats.views ? `<div class="stat"><dt>Views</dt><dd class="tabular">${esc(d.stats.views)}</dd></div>` : ""}`;
+  document.getElementById("header").innerHTML = `
+    <span class="brand-mark" aria-hidden="true">${logo}</span>
+    <div class="header-main">
+      <h1>${esc(d.title)}</h1>
+      ${meta}
+      <dl class="stats">
+        ${stats}
       </dl>
     </div>
     <div class="header-actions">
@@ -2677,6 +2734,22 @@ function renderHeader() {
 
 function renderLeft() {
   const d = DATA;
+  if (LOCAL_VIDEO.active && document.querySelector("#left .player-wrap #player")) {
+    const tcDur = document.getElementById("tc-dur");
+    if (tcDur) tcDur.textContent = " / " + fmtTime(d.lengthSeconds);
+    let ov = document.querySelector("#left > .overview");
+    if (ov) ov.innerHTML = d.overview || "";
+    else {
+      const tc = document.querySelector("#left > .timecode");
+      if (tc) tc.insertAdjacentHTML("afterend", `<p class="overview">${d.overview || ""}</p>`);
+    }
+    document.querySelectorAll("#left > .footage").forEach((el) => el.remove());
+    if (d.footageNeeded) {
+      const hold = document.querySelector("#left > .overview") || document.querySelector("#left > .timecode");
+      if (hold) hold.insertAdjacentHTML("afterend", `<div class="footage"><div class="k">Footage needed</div><div class="v">${esc(d.footageNeeded)}</div></div>`);
+    }
+    return;
+  }
   const src = d.video && d.video.src ? d.video.src : "";
   const poster = d.video && d.video.poster ? ` poster="${esc(d.video.poster)}"` : "";
   const footage = d.footageNeeded
@@ -2720,17 +2793,17 @@ function sceneCard(sc, openRecipe) {
         ${sc.cutNote ? `<p class="scene-cut">${esc(sc.cutNote)}</p>` : ""}
         <div class="scene-body">
           <div class="chips">${chips}</div>
-          <div class="prompt-block">
-            <button type="button" class="ghost-btn copy-prompt" data-scene="${sc.id}">Copy prompt</button>
+          ${sc.prompt || sc.filming || sc.estimatedNeeds ? `<div class="prompt-block">
+            ${sc.prompt ? `<button type="button" class="ghost-btn copy-prompt" data-scene="${sc.id}">Copy prompt</button>` : ""}
             <div class="filming">
               <div class="fk">${esc(sc.filming || "")}</div>
               <div class="fv">${sc.estimatedNeeds ? "Estimated needs: " + esc(sc.estimatedNeeds) : ""}</div>
             </div>
-          </div>
-          <div class="recipe-row">
+          </div>` : ""}
+          ${recipe ? `<div class="recipe-row">
             <button type="button" class="ghost-btn recipe-toggle" data-scene="${sc.id}" aria-expanded="${openRecipe ? "true" : "false"}">Recipe</button>
           </div>
-          <ul class="recipe-list${openRecipe ? " open" : ""}" id="recipe-${sc.id}">${recipe}</ul>
+          <ul class="recipe-list${openRecipe ? " open" : ""}" id="recipe-${sc.id}">${recipe}</ul>` : ""}
         </div>
       </article>
     </li>`;
@@ -2807,10 +2880,12 @@ function renderStyle() {
     </div>`).join("");
   return `<div class="style-pad">
     <div class="block-title">Color</div>
-    <div class="swatches">${swatches || `<p class="empty-hint">No colors in DATA.style.colors</p>`}</div>
-    <div class="style-row"><h3>Type</h3><p>${esc(s.type || "")}</p></div>
-    <div class="style-row"><h3>UI treatment</h3><p>${esc(s.uiTreatment || "")}</p></div>
-    <div class="style-row"><h3>Pacing</h3><p>${esc(s.pacing || "")}</p></div>
+    <div class="swatches">${swatches || `<p class="empty-hint">No colors detected</p>`}</div>
+    ${s.averageShot ? `<div class="style-row"><h3>Average shot length</h3><p>${esc(s.averageShot)}</p></div>` : ""}
+    ${s.cutPace ? `<div class="style-row"><h3>Cut pace</h3><p>${esc(s.cutPace)}</p></div>` : ""}
+    ${s.type ? `<div class="style-row"><h3>Type</h3><p>${esc(s.type)}</p></div>` : ""}
+    ${s.uiTreatment ? `<div class="style-row"><h3>UI treatment</h3><p>${esc(s.uiTreatment)}</p></div>` : ""}
+    ${s.pacing ? `<div class="style-row"><h3>Pacing</h3><p>${esc(s.pacing)}</p></div>` : ""}
   </div>`;
 }
 
@@ -2824,6 +2899,23 @@ function renderSound() {
     <li class="vo-item"><button type="button" class="t" data-seek="${l.seconds ?? parseStamp(l.time)}">${esc(l.time)}</button><span class="n">${esc(l.text)}</span></li>`).join("");
   const sfx = (s.sfx || []).map((l) => `
     <li class="sfx-item"><button type="button" class="t" data-seek="${l.seconds ?? parseStamp(l.time)}">${esc(l.time)}</button><span class="n">${esc(l.name)}</span></li>`).join("");
+  const wave = (s.waveform && s.waveform.length)
+    ? `<canvas id="audio-waveform" height="72" aria-label="Loudness waveform"></canvas>`
+    : "";
+  const loud = (s.hasAudio && s.peakDb != null)
+    ? `<p class="notes">Peak ${Number(s.peakDb).toFixed(1)} dB · RMS ${Number(s.rmsDb).toFixed(1)} dB</p>`
+    : "";
+  if (DATA.localFile) {
+    return `<div class="sound-pad">
+    <div class="sound-sec">
+      <div class="block-title">Audio track</div>
+      <h3>${s.hasAudio ? "Yes" : "No"}</h3>
+      ${wave}
+      ${loud}
+      <p class="notes">${esc(vo.notes || (s.hasAudio ? "An audio track is present." : "No audio analysis available."))}</p>
+    </div>
+  </div>`;
+  }
   return `<div class="sound-pad">
     <div class="sound-sec">
       <div class="block-title">Voiceover</div>
@@ -2857,10 +2949,11 @@ function renderRight() {
     <div class="tab-panel" id="panel-style" role="tabpanel">${renderStyle()}</div>
     <div class="tab-panel" id="panel-sound" role="tabpanel">${renderSound()}</div>
   `;
+  queueMicrotask(() => { if (typeof paintWaveform === "function") paintWaveform(); });
 }
 
 const YT_STATE = { player: null, ready: false, pending: null, timer: null };
-const LOCAL_VIDEO = { active: false, url: null, name: null };
+const LOCAL_VIDEO = { active: false, url: null, name: null, job: 0 };
 
 function isVideoFile(file) {
   if (!file) return false;
@@ -2946,7 +3039,8 @@ function useLocalVideo(file) {
   highlightAt(0);
   bindLocalPlayer();
   v.play().catch(() => {});
-  toast("Playing " + file.name);
+  toast("Uploaded · analysing…");
+  runLocalBreakdown(file);
 }
 
 function ytStart(seconds) {
@@ -3055,6 +3149,646 @@ function highlightAt(t) {
   highlightAt._id = current ? current.id : null;
 }
 
+const PULSE_SNAPSHOT = structuredClone(DATA);
+let TIME_FPS = 30;
+
+function fmtClock(sec) {
+  sec = Math.max(0, Number(sec) || 0);
+  let s = Math.round(sec);
+  let m = Math.floor(s / 60);
+  s = s % 60;
+  return `${m}:${String(s).padStart(2, "0")}`;
+}
+function fmtSize(bytes) {
+  const n = Number(bytes) || 0;
+  if (n < 1024) return n + " B";
+  if (n < 1024 * 1024) return (n / 1024).toFixed(n < 10 * 1024 ? 1 : 0) + " KB";
+  return (n / (1024 * 1024)).toFixed(n < 10 * 1024 * 1024 ? 1 : 1) + " MB";
+}
+function replaceData(next) {
+  Object.keys(DATA).forEach((k) => { delete DATA[k]; });
+  Object.assign(DATA, next);
+}
+
+function setAnalyzeProgress(show, ratio, label) {
+  const bar = document.getElementById("analyze-bar");
+  const fill = document.getElementById("analyze-fill");
+  const text = document.getElementById("analyze-label");
+  if (!bar) return;
+  if (!show) {
+    bar.hidden = true;
+    return;
+  }
+  bar.hidden = false;
+  const pct = Math.max(0, Math.min(100, Math.round((Number(ratio) || 0) * 100)));
+  if (fill) fill.style.width = pct + "%";
+  if (text) text.textContent = label || ("Analysing video… " + pct + "%");
+}
+
+function yieldUI() {
+  return new Promise((resolve) => {
+    requestAnimationFrame(() => resolve());
+  });
+}
+
+function seekMedia(video, time) {
+  return new Promise((resolve, reject) => {
+    const dur = video.duration || 0;
+    const t = Math.min(Math.max(0, time), Math.max(0, dur - 0.001));
+    if (Math.abs((video.currentTime || 0) - t) < 0.0005 && video.readyState >= 2) {
+      resolve(t);
+      return;
+    }
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      video.removeEventListener("seeked", finish);
+      video.removeEventListener("error", onErr);
+      clearTimeout(timer);
+      resolve(video.currentTime);
+    };
+    const onErr = () => {
+      if (done) return;
+      done = true;
+      video.removeEventListener("seeked", finish);
+      video.removeEventListener("error", onErr);
+      reject(new Error("Seek failed"));
+    };
+    const timer = setTimeout(finish, 1200);
+    video.addEventListener("seeked", finish);
+    video.addEventListener("error", onErr);
+    try { video.currentTime = t; } catch (e) { onErr(); }
+  });
+}
+
+function rgbToHsl(r, g, b) {
+  r /= 255; g /= 255; b /= 255;
+  const max = Math.max(r, g, b), min = Math.min(r, g, b);
+  const l = (max + min) / 2;
+  if (max === min) return [0, 0, l];
+  const d = max - min;
+  const s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+  let h = 0;
+  if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
+  else if (max === g) h = ((b - r) / d + 2) / 6;
+  else h = ((r - g) / d + 4) / 6;
+  return [h * 360, s, l];
+}
+
+function colorName(r, g, b) {
+  const [h, s, l] = rgbToHsl(r, g, b);
+  if (l < 0.1) return "Black";
+  if (l > 0.9 && s < 0.2) return "White";
+  if (s < 0.12) {
+    if (l < 0.35) return "Dark gray";
+    if (l < 0.7) return "Gray";
+    return "Light gray";
+  }
+  if (l < 0.18) return "Black";
+  const hues = [
+    [12, "Red"], [32, "Orange"], [55, "Yellow"], [80, "Yellow-green"],
+    [155, "Green"], [185, "Teal"], [200, "Cyan"], [255, "Blue"],
+    [285, "Purple"], [330, "Magenta"], [361, "Red"]
+  ];
+  const base = hues.find((x) => h <= x[0])[1];
+  if (l < 0.32) return "Dark " + base.toLowerCase();
+  if (l > 0.75) return "Light " + base.toLowerCase();
+  return base;
+}
+
+function toHex(r, g, b) {
+  const h = (n) => String(Math.max(0, Math.min(255, Math.round(n))).toString(16)).padStart(2, "0");
+  return "#" + h(r) + h(g) + h(b);
+}
+
+function frameFeatures(imageData) {
+  const d = imageData.data;
+  const n = imageData.width * imageData.height;
+  const hist = new Float32Array(32);
+  const buckets = new Map();
+  let rSum = 0, gSum = 0, bSum = 0, ySum = 0;
+  const gray = new Uint8Array(n);
+  for (let i = 0, p = 0; i < n; i++, p += 4) {
+    const r = d[p], g = d[p + 1], b = d[p + 2];
+    rSum += r; gSum += g; bSum += b;
+    const y = (r * 19595 + g * 38470 + b * 7471) >> 16;
+    gray[i] = y;
+    ySum += y;
+    hist[y >> 3]++;
+    const key = ((r >> 5) << 6) | ((g >> 5) << 3) | (b >> 5);
+    buckets.set(key, (buckets.get(key) || 0) + 1);
+  }
+  for (let i = 0; i < 32; i++) hist[i] /= n;
+  return {
+    hist,
+    mean: [rSum / n, gSum / n, bSum / n],
+    luma: ySum / n,
+    gray,
+    buckets
+  };
+}
+
+function frameDist(a, b) {
+  let h = 0;
+  for (let i = 0; i < 32; i++) h += Math.abs(a.hist[i] - b.hist[i]);
+  const md = (
+    Math.abs(a.mean[0] - b.mean[0]) +
+    Math.abs(a.mean[1] - b.mean[1]) +
+    Math.abs(a.mean[2] - b.mean[2])
+  ) / 765;
+  let pix = 0;
+  const n = a.gray.length;
+  for (let i = 0; i < n; i++) pix += Math.abs(a.gray[i] - b.gray[i]);
+  pix = (pix / n) / 255;
+  return 0.30 * h + 0.25 * md + 0.45 * pix;
+}
+
+function mergeBuckets(maps) {
+  const out = new Map();
+  for (const m of maps) {
+    if (!m) continue;
+    for (const [k, v] of m) out.set(k, (out.get(k) || 0) + v);
+  }
+  return out;
+}
+
+function paletteFromBuckets(bucketMap, limit) {
+  const items = [...bucketMap.entries()].sort((a, b) => b[1] - a[1]);
+  const total = items.reduce((s, x) => s + x[1], 0) || 1;
+  const colors = [];
+  for (const [key, count] of items) {
+    if (colors.length >= (limit || 6)) break;
+    const r = ((key >> 6) & 7) * 36 + 18;
+    const g = ((key >> 3) & 7) * 36 + 18;
+    const b = (key & 7) * 36 + 18;
+    const hex = toHex(r, g, b);
+    if (colors.some((c) => c.hex === hex)) continue;
+    colors.push({
+      hex,
+      name: colorName(r, g, b),
+      role: colors.length === 0 ? "Dominant" : (count / total > 0.12 ? "Major" : "Accent"),
+      share: count / total
+    });
+  }
+  return colors;
+}
+
+function detectCuts(samples, interval, duration) {
+  const diffs = samples.map((s) => s.diff);
+  const usable = diffs.slice(1);
+  if (!usable.length) return [0, duration];
+  const sorted = [...usable].sort((a, b) => a - b);
+  const mean = usable.reduce((a, b) => a + b, 0) / usable.length;
+  const variance = usable.reduce((a, b) => a + (b - mean) * (b - mean), 0) / usable.length;
+  const std = Math.sqrt(variance);
+  const q80 = sorted[Math.min(sorted.length - 1, Math.floor(sorted.length * 0.80))];
+  const q95 = sorted[Math.min(sorted.length - 1, Math.floor(sorted.length * 0.95))];
+  let threshold = Math.max(0.16, mean + 3.2 * std, q80 * 2.2);
+  if (q95 > 0.4 && mean < 0.08) threshold = Math.max(0.16, Math.min(threshold, (mean + q95) / 2));
+  threshold = Math.min(threshold, 0.48);
+
+  const minGap = Math.max(0.4, interval * 3);
+  const peaks = [];
+  for (let i = 1; i < diffs.length; i++) {
+    const prev = diffs[i - 1] || 0;
+    const next = diffs[i + 1] || 0;
+    const isPeak = diffs[i] >= prev && diffs[i] >= next;
+    if (diffs[i] >= threshold && (isPeak || diffs[i] >= threshold * 1.15)) {
+      peaks.push({ i, t: samples[i].t, d: diffs[i] });
+    }
+  }
+  const cuts = [0];
+  for (const p of peaks) {
+    const last = cuts[cuts.length - 1];
+    if (p.t - last < minGap) {
+      if (cuts.length > 1) {
+        const lastI = samples.findIndex((s) => Math.abs(s.t - last) < interval / 2);
+        const lastD = lastI >= 0 ? samples[lastI].diff : 0;
+        if (p.d > lastD) cuts[cuts.length - 1] = p.t;
+      }
+      continue;
+    }
+    if (duration - p.t < minGap * 0.5) continue;
+    cuts.push(p.t);
+  }
+  return cuts;
+}
+
+function sectionPlan(scenes, duration) {
+  if (!scenes.length) return [];
+  if (scenes.length === 1) {
+    return [{ id: "s1", name: "Full clip", type: "Intro", scenes: scenes.slice() }];
+  }
+  const introEnd = duration * 0.22;
+  const endStart = duration * 0.75;
+  let intro = [];
+  let mid = [];
+  let end = [];
+  for (const sc of scenes) {
+    if (sc.start < introEnd) intro.push(sc);
+    else if (sc.start >= endStart) end.push(sc);
+    else mid.push(sc);
+  }
+  if (!intro.length) {
+    intro = [scenes[0]];
+    mid = mid.filter((s) => s.id !== scenes[0].id);
+    end = end.filter((s) => s.id !== scenes[0].id);
+  }
+  if (!end.length) {
+    const last = scenes[scenes.length - 1];
+    if (!intro.some((s) => s.id === last.id)) {
+      end = [last];
+      mid = mid.filter((s) => s.id !== last.id);
+    }
+  }
+  const groups = [];
+  if (intro.length) groups.push({ id: "s" + (groups.length + 1), name: "Intro", type: "Intro", scenes: intro });
+  if (mid.length) groups.push({ id: "s" + (groups.length + 1), name: "Middle", type: "Middle", scenes: mid });
+  if (end.length) groups.push({ id: "s" + (groups.length + 1), name: "End", type: "End", scenes: end });
+  return groups;
+}
+
+function motionLabel(avgDiff) {
+  if (avgDiff < 0.035) return "static";
+  if (avgDiff < 0.09) return "slow";
+  return "fast";
+}
+
+function brightnessLabel(luma) {
+  if (luma < 70) return "dark";
+  if (luma > 180) return "bright";
+  return "mid-tone";
+}
+
+function describeScene(feat, motion) {
+  const [r, g, b] = feat.mean;
+  const col = colorName(r, g, b);
+  const bri = brightnessLabel(feat.luma);
+  const mot = motionLabel(motion);
+  return `${col} frame, ${bri}, ${mot} motion.`;
+}
+
+async function analyzeAudio(file) {
+  const result = {
+    hasAudio: false,
+    waveform: [],
+    peakDb: null,
+    rmsDb: null,
+    error: ""
+  };
+  try {
+    const buf = await file.arrayBuffer();
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    let audio;
+    try {
+      audio = await ctx.decodeAudioData(buf.slice(0));
+    } finally {
+      if (ctx.close) ctx.close().catch(() => {});
+    }
+    if (!audio || !audio.numberOfChannels || audio.duration <= 0) {
+      result.error = "No audio track in this file.";
+      return result;
+    }
+    const ch = audio.numberOfChannels;
+    const len = audio.length;
+    const peaks = Math.max(80, Math.min(240, Math.round(audio.duration * 8)));
+    const step = Math.max(1, Math.floor(len / peaks));
+    const waveform = new Array(peaks).fill(0);
+    let peak = 0;
+    let sumSq = 0;
+    const channels = [];
+    for (let c = 0; c < ch; c++) channels.push(audio.getChannelData(c));
+    for (let i = 0; i < len; i++) {
+      let s = 0;
+      for (let c = 0; c < ch; c++) s += channels[c][i];
+      s /= ch;
+      const a = Math.abs(s);
+      if (a > peak) peak = a;
+      sumSq += s * s;
+      const bin = Math.min(peaks - 1, Math.floor(i / step));
+      if (a > waveform[bin]) waveform[bin] = a;
+    }
+    const rms = Math.sqrt(sumSq / len);
+    const maxW = Math.max(0.0001, ...waveform);
+    result.hasAudio = true;
+    result.waveform = waveform.map((v) => v / maxW);
+    result.peakDb = 20 * Math.log10(Math.max(peak, 1e-8));
+    result.rmsDb = 20 * Math.log10(Math.max(rms, 1e-8));
+    return result;
+  } catch (e) {
+    result.error = "No audio analysis available in this browser.";
+    return result;
+  }
+}
+
+function paintWaveform() {
+  const canvas = document.getElementById("audio-waveform");
+  const wave = DATA.sound && DATA.sound.waveform;
+  if (!canvas || !wave || !wave.length) return;
+  const w = canvas.clientWidth || 320;
+  const h = canvas.height || 72;
+  canvas.width = Math.max(320, Math.floor(w * (window.devicePixelRatio || 1)));
+  const ctx = canvas.getContext("2d");
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = "#141414";
+  ctx.fillRect(0, 0, W, H);
+  const mid = H / 2;
+  const barW = W / wave.length;
+  ctx.fillStyle = "#d6d6d6";
+  for (let i = 0; i < wave.length; i++) {
+    const amp = Math.max(0.02, wave[i]) * (H * 0.44);
+    const x = i * barW;
+    ctx.fillRect(x, mid - amp, Math.max(1, barW * 0.7), amp * 2);
+  }
+}
+
+async function analyzeLocalVideo(file, url, job) {
+  const video = document.createElement("video");
+  video.muted = true;
+  video.playsInline = true;
+  video.preload = "auto";
+  video.crossOrigin = "anonymous";
+  video.src = url;
+  video.style.cssText = "position:fixed;left:-9999px;top:0;width:16px;height:16px;opacity:0;pointer-events:none";
+  document.body.appendChild(video);
+
+  const cleanup = () => {
+    try { video.pause(); } catch (e) {}
+    video.removeAttribute("src");
+    video.load();
+    video.remove();
+  };
+
+  try {
+    await new Promise((resolve, reject) => {
+      const onOk = () => { video.removeEventListener("loadedmetadata", onOk); resolve(); };
+      const onErr = () => reject(new Error("Could not load video for analysis"));
+      video.addEventListener("loadedmetadata", onOk);
+      video.addEventListener("error", onErr);
+      setTimeout(() => reject(new Error("Timed out loading video metadata")), 15000);
+    });
+
+    const duration = video.duration;
+    const width = video.videoWidth || 0;
+    const height = video.videoHeight || 0;
+    if (!duration || !isFinite(duration) || duration < 0.05) throw new Error("Video has no duration");
+
+    const fps = 30;
+    TIME_FPS = fps;
+    const interval = duration > 90 ? Math.max(0.1, duration / 900) : 0.1;
+    const sampleW = 96;
+    const sampleH = Math.max(54, Math.round(sampleW * (height || 9) / (width || 16)));
+    const canvas = document.createElement("canvas");
+    canvas.width = sampleW;
+    canvas.height = sampleH;
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
+
+    const times = [];
+    for (let t = 0; t < duration; t += interval) times.push(t);
+    if (times[times.length - 1] < duration - interval * 0.4) times.push(Math.max(0, duration - 0.04));
+
+    const samples = [];
+    let prev = null;
+    for (let i = 0; i < times.length; i++) {
+      if (job !== LOCAL_VIDEO.job) throw new Error("cancelled");
+      await seekMedia(video, times[i]);
+      ctx.drawImage(video, 0, 0, sampleW, sampleH);
+      const feat = frameFeatures(ctx.getImageData(0, 0, sampleW, sampleH));
+      const diff = prev ? frameDist(feat, prev) : 0;
+      samples.push({ t: times[i], feat, diff });
+      prev = feat;
+      if (i % 4 === 0) {
+        setAnalyzeProgress(true, 0.05 + 0.7 * (i / times.length), "Detecting cuts… " + Math.round(100 * i / times.length) + "%");
+        await yieldUI();
+      }
+    }
+
+    const cutStarts = detectCuts(samples, interval, duration);
+    const bounds = cutStarts.map((start, i) => ({
+      start,
+      end: i + 1 < cutStarts.length ? cutStarts[i + 1] : duration
+    }));
+
+    const thumbW = 480;
+    const thumbH = Math.max(1, Math.round(thumbW * (height || 9) / (width || 16)));
+    const thumbCanvas = document.createElement("canvas");
+    thumbCanvas.width = thumbW;
+    thumbCanvas.height = thumbH;
+    const tctx = thumbCanvas.getContext("2d");
+
+    const scenes = [];
+    for (let i = 0; i < bounds.length; i++) {
+      if (job !== LOCAL_VIDEO.job) throw new Error("cancelled");
+      const start = bounds[i].start;
+      const end = bounds[i].end;
+      const mid = start + (end - start) / 2;
+      await seekMedia(video, mid);
+      tctx.drawImage(video, 0, 0, thumbW, thumbH);
+      const thumb = thumbCanvas.toDataURL("image/jpeg", 0.72);
+      ctx.drawImage(video, 0, 0, sampleW, sampleH);
+      const midFeat = frameFeatures(ctx.getImageData(0, 0, sampleW, sampleH));
+      const inside = samples.filter((s) => s.t >= start && s.t < end);
+      const motion = inside.length > 1
+        ? inside.slice(1).reduce((a, s) => a + s.diff, 0) / (inside.length - 1)
+        : 0;
+      const mot = motionLabel(motion);
+      const pal = paletteFromBuckets(midFeat.buckets, 3);
+      const sc = {
+        id: i + 1,
+        number: String(i + 1).padStart(2, "0"),
+        sectionId: "",
+        type: "Scene",
+        kind: mot.charAt(0).toUpperCase() + mot.slice(1),
+        duration: (end - start).toFixed(1) + "s",
+        start,
+        end,
+        description: describeScene(midFeat, motion),
+        cutNote: i === 0 ? "Auto-detected scene" : "Hard cut in · auto-detected",
+        techniques: [i === 0 ? "Opening shot" : "Hard cut", mot + " motion"],
+        prompt: "",
+        filming: "",
+        estimatedNeeds: "",
+        thumb,
+        recipe: [],
+        _feat: midFeat,
+        _motion: motion,
+        _palette: pal
+      };
+      scenes.push(sc);
+      setAnalyzeProgress(true, 0.75 + 0.15 * ((i + 1) / bounds.length), "Capturing thumbnails… " + (i + 1) + "/" + bounds.length);
+      await yieldUI();
+    }
+
+    const groups = sectionPlan(scenes, duration);
+    const sections = groups.map((g) => {
+      const gs = g.scenes;
+      const start = gs[0].start;
+      const end = gs[gs.length - 1].end;
+      gs.forEach((sc) => {
+        sc.sectionId = g.id;
+        sc.type = g.type;
+      });
+      return {
+        id: g.id,
+        name: g.name,
+        type: g.type,
+        scenesCount: gs.length,
+        duration: (end - start).toFixed(1) + "s",
+        start,
+        end
+      };
+    });
+
+    const allBuckets = mergeBuckets(scenes.map((s) => s._feat && s._feat.buckets));
+    const colors = paletteFromBuckets(allBuckets, 6);
+    const avgShot = duration / scenes.length;
+    const cutsPerMin = scenes.length > 1 ? ((scenes.length - 1) / duration) * 60 : 0;
+    let paceWord = "measured";
+    if (avgShot >= 6) paceWord = "slow";
+    else if (avgShot <= 1.6) paceWord = "rapid";
+    else if (avgShot <= 2.8) paceWord = "brisk";
+
+    setAnalyzeProgress(true, 0.93, "Analysing audio…");
+    await yieldUI();
+    const audio = await analyzeAudio(file);
+    if (job !== LOCAL_VIDEO.job) throw new Error("cancelled");
+
+    const longest = scenes.reduce((a, s) => (s.end - s.start > a.end - a.start ? s : a), scenes[0]);
+    const lead = `${scenes.length} scene${scenes.length === 1 ? "" : "s"}, avg ${avgShot.toFixed(1)} s, longest at ${fmtClock(longest.start)} (${(longest.end - longest.start).toFixed(1)} s).`;
+    const rest = `${width}×${height}, ${fps} fps, ${fmtSize(file.size)}.` + (audio.hasAudio
+      ? ` Audio track present (peak ${audio.peakDb.toFixed(1)} dB, RMS ${audio.rmsDb.toFixed(1)} dB).`
+      : " No audio track detected.");
+
+    const next = {
+      title: file.name,
+      brand: "Local file",
+      brandLogo: "",
+      brandUrl: "",
+      date: new Date(file.lastModified || Date.now()).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+      length: fmtClock(duration),
+      lengthSeconds: duration,
+      fps,
+      aiAnnotated: false,
+      localFile: true,
+      madeTeam: "",
+      studio: "",
+      stats: {
+        length: fmtClock(duration),
+        scenes: `${scenes.length} · ${avgShot.toFixed(1)} s avg`,
+        resolution: `${width}×${height}`,
+        fileSize: fmtSize(file.size),
+        audio: audio.hasAudio ? "Yes" : "No"
+      },
+      video: { src: url, youtubeId: "", poster: scenes[0] ? scenes[0].thumb : "", sourceUrl: "" },
+      overview: `<strong>${esc(lead)}</strong> ${esc(rest)} <span class="src-note">Cuts, colours and motion are detected automatically in your browser (heuristic, not AI).</span>`,
+      footageNeeded: "",
+      sections,
+      scenes: scenes.map((s) => {
+        const copy = { ...s };
+        delete copy._feat;
+        delete copy._motion;
+        delete copy._palette;
+        return copy;
+      }),
+      style: {
+        colors,
+        type: "",
+        uiTreatment: "",
+        averageShot: avgShot.toFixed(1) + " s",
+        cutPace: `${cutsPerMin.toFixed(1)} cuts/min · ${paceWord} pace`,
+        pacing: `Average shot length ${avgShot.toFixed(1)} s · ${scenes.length} scenes · ${cutsPerMin.toFixed(1)} cuts/min · ${paceWord} pace.`
+      },
+      sound: {
+        hasAudio: audio.hasAudio,
+        waveform: audio.waveform,
+        peakDb: audio.peakDb,
+        rmsDb: audio.rmsDb,
+        voiceover: {
+          present: false,
+          notes: audio.hasAudio
+            ? "An audio track is present. Speech vs music was not classified."
+            : (audio.error || "No audio track in this file."),
+          lines: []
+        },
+        music: { title: "", notes: audio.hasAudio ? "No music classification is available client-side." : "", cues: [] },
+        sfx: []
+      },
+      width,
+      height
+    };
+
+    cleanup();
+    return next;
+  } catch (err) {
+    cleanup();
+    throw err;
+  }
+}
+
+function applyAnalyzingShell(file) {
+  replaceData({
+    title: file.name,
+    brand: "Local file",
+    brandLogo: "",
+    brandUrl: "",
+    date: new Date(file.lastModified || Date.now()).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+    length: "…",
+    lengthSeconds: 0,
+    fps: 30,
+    aiAnnotated: false,
+    localFile: true,
+    madeTeam: "",
+    studio: "",
+    stats: {
+      length: "…",
+      scenes: "Analysing…",
+      resolution: "…",
+      fileSize: fmtSize(file.size),
+      audio: "…"
+    },
+    video: { src: LOCAL_VIDEO.url, youtubeId: "", poster: "", sourceUrl: "" },
+    overview: "<strong>Analysing video…</strong> Detecting cuts, colours and audio in your browser.",
+    footageNeeded: "",
+    sections: [],
+    scenes: [],
+    style: { colors: [], type: "", uiTreatment: "", pacing: "", averageShot: "", cutPace: "" },
+    sound: { hasAudio: false, waveform: [], voiceover: { present: false, notes: "Analysing…", lines: [] }, music: { title: "", notes: "", cues: [] }, sfx: [] }
+  });
+}
+
+async function runLocalBreakdown(file) {
+  const job = ++LOCAL_VIDEO.job;
+  applyAnalyzingShell(file);
+  renderHeader();
+  renderLeft();
+  renderRight();
+  setAnalyzeProgress(true, 0.02, "Loading video…");
+  try {
+    const next = await analyzeLocalVideo(file, LOCAL_VIDEO.url, job);
+    if (job !== LOCAL_VIDEO.job) return;
+    TIME_FPS = next.fps || 30;
+    replaceData(next);
+    renderHeader();
+    renderLeft();
+    renderRight();
+    paintWaveform();
+    const player = document.getElementById("player");
+    highlightAt(player && player.tagName === "VIDEO" ? player.currentTime : 0);
+    setAnalyzeProgress(false);
+    toast("Breakdown ready · " + next.scenes.length + " scenes");
+  } catch (err) {
+    if (err && err.message === "cancelled") return;
+    console.error(err);
+    setAnalyzeProgress(false);
+    const ov = document.querySelector("#left > .overview");
+    if (ov) ov.innerHTML = "<strong>Could not analyse this video in the browser.</strong> The file is playing, but cut detection failed.";
+    toast("Could not analyse video");
+  }
+}
+
+
 function bind() {
   const v = document.getElementById("player");
   const ph = document.getElementById("ph");
@@ -3068,11 +3802,37 @@ function bind() {
   }
 
   const fileInput = document.getElementById("video-file");
-  document.getElementById("upload-btn")?.addEventListener("click", () => fileInput && fileInput.click());
   fileInput?.addEventListener("change", (e) => {
     const file = e.target.files && e.target.files[0];
     if (file) useLocalVideo(file);
     e.target.value = "";
+  });
+  document.getElementById("header")?.addEventListener("click", async (e) => {
+    if (e.target.closest("#upload-btn")) {
+      fileInput && fileInput.click();
+      return;
+    }
+    const follow = e.target.closest("#follow-btn");
+    if (follow) {
+      const on = follow.classList.toggle("is-on");
+      follow.innerHTML = icons.bell + (on ? " Following" : " Follow");
+      return;
+    }
+    const save = e.target.closest("#save-btn");
+    if (save) {
+      save.classList.toggle("is-saved");
+      toast(save.classList.contains("is-saved") ? "Saved" : "Removed from saved");
+      return;
+    }
+    if (e.target.closest("#copy-link")) {
+      if (DATA.localFile) { toast("This is a local file"); return; }
+      try {
+        await navigator.clipboard.writeText((DATA.video && DATA.video.sourceUrl) || location.href);
+        toast("Link copied");
+      } catch {
+        toast("Could not copy link");
+      }
+    }
   });
 
   const left = document.getElementById("left");
@@ -3106,23 +3866,6 @@ function bind() {
     else toast("Please drop a video file");
   });
 
-  document.getElementById("follow-btn")?.addEventListener("click", (e) => {
-    const btn = e.currentTarget;
-    const on = btn.classList.toggle("is-on");
-    btn.innerHTML = icons.bell + (on ? " Following" : " Follow");
-  });
-  document.getElementById("save-btn")?.addEventListener("click", (e) => {
-    e.currentTarget.classList.toggle("is-saved");
-    toast(e.currentTarget.classList.contains("is-saved") ? "Saved" : "Removed from saved");
-  });
-  document.getElementById("copy-link")?.addEventListener("click", async () => {
-    try {
-      await navigator.clipboard.writeText((DATA.video && DATA.video.sourceUrl) || location.href);
-      toast("Link copied");
-    } catch {
-      toast("Could not copy link");
-    }
-  });
 
   document.getElementById("right").addEventListener("click", async (e) => {
     const tab = e.target.closest(".tab");
@@ -3206,7 +3949,7 @@ renderRight();
 bind();
 
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js").catch(() => {});
+  navigator.serviceWorker.register("sw.js?v=2").catch(() => {});
 }
 
 (function applyHashTab() {
