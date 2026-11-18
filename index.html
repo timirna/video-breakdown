@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title></title>
+  <title>SaaS Launch Video &amp; Motion Design | Pulse</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -395,6 +395,17 @@
       color: var(--text-4);
     }
     .scene-body { padding-left: 26px; }
+    .scene-media { display: flex; gap: 12px; padding-left: 26px; margin-top: 6px; align-items: flex-start; }
+    .scene-media .scene-desc { padding-left: 0 !important; margin: 0; flex: 1; }
+    .scene-thumb { width: 124px; flex: none; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 8px; background: #111; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); cursor: pointer; display: block; }
+    .scene.current .scene-thumb { outline: 2px solid var(--role-hook); outline-offset: 1px; }
+    .player-wrap iframe, .player-wrap #player { width: 100%; height: 100%; display: block; border: 0; background: #000; }
+    .yt-poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; cursor: pointer; }
+    .yt-poster-btn { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(0,0,0,0.25); border: 0; cursor: pointer; color: #fff; }
+    .yt-poster-btn .play-orb { width: 72px; height: 72px; border-radius: 50%; background: rgba(0,0,0,0.6); display: grid; place-items: center; }
+    .src-note { display: block; margin-top: 10px; font-size: 12px; color: var(--text-4); }
+    .src-note a { color: var(--text-3); text-decoration: underline; }
+    @media (max-width: 600px) { .scene-thumb { width: 112px; } }
 
     .chips {
       margin-top: 10px;
@@ -723,198 +734,1800 @@
    ========================================================================== */
 
 const DATA = {
-  title: "Example Brand Launch Film | Example Brand",
-  brand: "Example Brand",
-  brandLogo: "",
-  date: "Nov 2026",
-  length: "0:40",
-  lengthSeconds: 40,
-  aiAnnotated: true,
-  madeTeam: "Example Team",
-  studio: "Example Studio",
-  stats: {
-    length: "0:40",
-    scenes: "8 · 5.0 s avg",
-    productOnScreen: "0:08",
-    featuresShown: "3",
-    callToAction: "0:36 · 90%",
-    voiceover: "Yes"
+  "title": "SaaS Launch Video & Motion Design | Pulse",
+  "brand": "Pulse",
+  "brandLogo": "thumbs/pulse-logo.png",
+  "brandUrl": "https://pulsetracker.app",
+  "date": "Oct 2026",
+  "length": "0:52",
+  "lengthSeconds": 52.106,
+  "aiAnnotated": true,
+  "madeTeam": "Addx Studio",
+  "studio": "Addx Studio",
+  "stats": {
+    "length": "0:52",
+    "scenes": "35 · 1.5 s avg",
+    "productOnScreen": "0:08",
+    "featuresShown": "7",
+    "callToAction": "0:49 · 96%",
+    "voiceover": "Yes",
+    "views": "1.4K on YouTube"
   },
-  video: {
-    src: "",
-    poster: ""
+  "video": {
+    "src": "",
+    "youtubeId": "Qa8XphNPRcI",
+    "poster": "thumbs/poster.jpg",
+    "sourceUrl": "https://www.youtube.com/watch?v=Qa8XphNPRcI"
   },
-  overview: "<strong>EXAMPLE — This is placeholder copy, not a real film breakdown.</strong> A 0:40 sample launch film in 8 scenes (about 5.0 s each). The product appears at 0:08, three features are shown, and a call to action lands at 0:36 (90% in), over a voiceover. Replace every field in DATA before publishing.",
-  footageNeeded: "EXAMPLE estimated needs: 3 capture groups — your screens or recordings · 1 official logo — reused across the film · 1 graphic passage — draw or supply · 1 3D passage — build or supply",
-  sections: [
-    { id: "s1", name: "The opening question", type: "Hook", scenesCount: 2, duration: "7.0s", start: 0, end: 7 },
-    { id: "s2", name: "Meet the product", type: "Product intro", scenesCount: 2, duration: "8.0s", start: 7, end: 15 },
-    { id: "s3", name: "What it can do", type: "Feature reveal", scenesCount: 3, duration: "21.0s", start: 15, end: 36 },
-    { id: "s4", name: "Start today", type: "CTA", scenesCount: 1, duration: "4.0s", start: 36, end: 40 }
+  "overview": "<strong>Pulse’s 0:52 launch film runs 35 scenes, about 1.5 s each.</strong> The product shows up at 0:08 and 7 features are revealed. The call to action lands at 0:49 (96% in), over a voiceover. The video alternates kinetic type cards on black and off-white with 3D-tilted dashboard mockups, announcing each feature word by word before demoing it in the interface. Signature moves are the green pill highlights, the pulsing green dot, and slow tilt and scroll camera passes over the UI at a steady mid-tempo pace. <span class=\"src-note\">Breakdown data: <a href=\"https://launchscene.app/v/pulse-saas-launch-video-motion-design-pulse\" target=\"_blank\" rel=\"noopener\">Launchscene</a> · Video: <a href=\"https://www.youtube.com/watch?v=Qa8XphNPRcI\" target=\"_blank\" rel=\"noopener\">YouTube, Addx Studio</a></span>",
+  "footageNeeded": "Estimated needs: 6 capture groups — your screens or recordings · 1 official logo — reused across the film · 2 filmed passages — shoot, supply or replace · 2 graphic passages — draw or supply · 4 3D passages — build or supply",
+  "sections": [
+    {
+      "id": "s1",
+      "name": "Which video sent them",
+      "type": "Hook",
+      "scenesCount": 7,
+      "duration": "8.5s",
+      "start": 0.0,
+      "end": 8.533
+    },
+    {
+      "id": "s2",
+      "name": "Meet Pulse",
+      "type": "Product intro",
+      "scenesCount": 2,
+      "duration": "2.2s",
+      "start": 8.533,
+      "end": 10.7
+    },
+    {
+      "id": "s3",
+      "name": "Track conversions",
+      "type": "Feature reveal",
+      "scenesCount": 3,
+      "duration": "4.8s",
+      "start": 10.7,
+      "end": 15.466
+    },
+    {
+      "id": "s4",
+      "name": "Everything is in Pulse",
+      "type": "Feature reveal",
+      "scenesCount": 4,
+      "duration": "4.5s",
+      "start": 15.466,
+      "end": 19.967
+    },
+    {
+      "id": "s5",
+      "name": "Content that made you money",
+      "type": "Feature reveal",
+      "scenesCount": 4,
+      "duration": "6.7s",
+      "start": 19.967,
+      "end": 26.666
+    },
+    {
+      "id": "s6",
+      "name": "Platform that makes most",
+      "type": "Feature reveal",
+      "scenesCount": 3,
+      "duration": "2.4s",
+      "start": 26.666,
+      "end": 29.066
+    },
+    {
+      "id": "s7",
+      "name": "Track your leads",
+      "type": "Feature reveal",
+      "scenesCount": 4,
+      "duration": "9.3s",
+      "start": 29.066,
+      "end": 38.333
+    },
+    {
+      "id": "s8",
+      "name": "Analytics by source",
+      "type": "Feature reveal",
+      "scenesCount": 1,
+      "duration": "2.5s",
+      "start": 38.333,
+      "end": 40.8
+    },
+    {
+      "id": "s9",
+      "name": "Own a content agency",
+      "type": "Feature reveal",
+      "scenesCount": 4,
+      "duration": "5.8s",
+      "start": 40.8,
+      "end": 46.567
+    },
+    {
+      "id": "s10",
+      "name": "Intelligent tracking",
+      "type": "Outro",
+      "scenesCount": 2,
+      "duration": "3.3s",
+      "start": 46.567,
+      "end": 49.866
+    },
+    {
+      "id": "s11",
+      "name": "Start your free trial",
+      "type": "CTA",
+      "scenesCount": 1,
+      "duration": "2.2s",
+      "start": 49.866,
+      "end": 52.106
+    }
   ],
-  scenes: [
+  "scenes": [
     {
-      id: 1, number: "01", sectionId: "s1", type: "Hook", kind: "Title card",
-      duration: "3.5s", start: 0, end: 3.5,
-      description: "EXAMPLE: White headline builds word by word on black, then a colored badge snaps in and the line collapses into a rounded app icon.",
-      cutNote: "Cut → Cut · Static · Large white sans, regular weight; words slide in sequentially",
-      techniques: ["Kinetic type", "Morph"],
-      prompt: "EXAMPLE PROMPT — not a real recut brief. Black frame, large white sans headline building word by word, then a rounded badge morphs into an app icon. Mid-tempo, no logo yet.",
-      filming: "No filming indicated",
-      estimatedNeeds: "EXAMPLE: Your copy and visual identity; audio optional",
-      recipe: [
-        { time: "0.0s", kind: "Voice", value: "EXAMPLE — “you already have the data, you just cannot see it”" },
-        { time: "0.3s", kind: "Text", value: "“You already have” · slide, linear" },
-        { time: "1.2s", kind: "Text", value: "“the data”" },
-        { time: "1.4s", kind: "Sound", value: "Click" },
-        { time: "2.4s", kind: "Technique", value: "Morph" }
+      "id": 1,
+      "number": "01",
+      "sectionId": "s1",
+      "type": "Hook",
+      "kind": "Title card",
+      "duration": "2.1s",
+      "start": 0.0,
+      "end": 2.133,
+      "description": "White headline builds word by word on black: You just got, then a green badge with 22, then warm leads. The line collapses and the badge expands into a rounded app icon showing a dark video of a person with a small New lead card.",
+      "cutNote": "Cut → Cut · Static · Large white sans, regular weight, words slide in sequentially; 22 set in a green rounded square",
+      "techniques": [
+        "Kinetic type",
+        "Morph"
+      ],
+      "prompt": "Scene 01 of Pulse's 0:52 SaaS launch film (Hook, Title card, 2.1s, 16:9, 30 fps). White headline builds word by word on black: You just got, then a green badge with 22, then warm leads. The line collapses and the badge expands into a rounded app icon showing a dark video of a person with a small New lead card. Typography: Large white sans, regular weight, words slide in sequentially; 22 set in a green rounded square. On-screen text: “You just got 22 warm leads”. Techniques: Kinetic type, Morph. Camera: Static. Transition: cut in, cut out. Palette: #000102, #59615d, #95ac9d.",
+      "filming": "No filming indicated",
+      "estimatedNeeds": "Your copy and visual identity; audio optional",
+      "thumb": "thumbs/s01.jpg",
+      "recipe": [
+        {
+          "time": "0.0s",
+          "kind": "Voice",
+          "value": "“you just got 22 warm leads from your organic content but which video actually sent them this”"
+        },
+        {
+          "time": "0.3s",
+          "kind": "Text",
+          "value": "“You just got” · slide, linear"
+        },
+        {
+          "time": "1.0s",
+          "kind": "Technique",
+          "value": "Kinetic type"
+        },
+        {
+          "time": "1.1s",
+          "kind": "Text",
+          "value": "“22” · slide, linear"
+        },
+        {
+          "time": "1.3s",
+          "kind": "Sound",
+          "value": "Click"
+        },
+        {
+          "time": "1.3s",
+          "kind": "Text",
+          "value": "“warm leads”"
+        },
+        {
+          "time": "1.8s",
+          "kind": "Sound",
+          "value": "Click"
+        },
+        {
+          "time": "2.0s",
+          "kind": "Technique",
+          "value": "Morph"
+        }
       ]
     },
     {
-      id: 2, number: "02", sectionId: "s1", type: "Hook", kind: "Live action",
-      duration: "3.5s", start: 3.5, end: 7,
-      description: "EXAMPLE: A person at a laptop sits inside a rounded card while notification chips pop in around the frame.",
-      cutNote: "Cut → Cut · Slow push in · Soft practical light, cards scale in",
-      techniques: ["Live action card", "Kinetic type"],
-      prompt: "EXAMPLE PROMPT — framed live-action card of someone at a laptop, notification chips popping in around them, headline assembling letter by letter.",
-      filming: "Filming indicated",
-      estimatedNeeds: "EXAMPLE: 1 filmed passage — shoot, supply or replace",
-      recipe: [
-        { time: "0.0s", kind: "Text", value: "Headline assembles across the top" },
-        { time: "0.8s", kind: "UI", value: "First notification chip pops in" },
-        { time: "1.6s", kind: "Sound", value: "Soft pop" }
+      "id": 2,
+      "number": "02",
+      "sectionId": "s1",
+      "type": "Hook",
+      "kind": "Live action",
+      "duration": "1.6s",
+      "start": 2.133,
+      "end": 3.733,
+      "description": "A man types on a laptop under green light inside a rounded card as the headline Organic Content assembles letter by letter across the top. White and green lead-notification cards pop in one by one around him.",
+      "cutNote": "Cut → Cut · Pull out · Large white geometric sans, regular weight, letters slide in to form the headline",
+      "techniques": [
+        "Kinetic type"
+      ],
+      "prompt": "Scene 02 of Pulse's 0:52 SaaS launch film (Hook, Live action, 1.6s, 16:9, 30 fps). A man types on a laptop under green light inside a rounded card as the headline Organic Content assembles letter by letter across the top. White and green lead-notification cards pop in one by one around him. Typography: Large white geometric sans, regular weight, letters slide in to form the headline. On-screen text: “Organic Content”. Techniques: Kinetic type. Camera: Pull out. Transition: cut in, cut out. Palette: #05120a, #285134, #bfd0c4.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s02.jpg",
+      "recipe": [
+        {
+          "time": "0.0s",
+          "kind": "Camera",
+          "value": "Pull out · ease-in, 1.5s"
+        },
+        {
+          "time": "0.2s",
+          "kind": "Technique",
+          "value": "Kinetic type"
+        }
       ]
     },
     {
-      id: 3, number: "03", sectionId: "s2", type: "Product intro", kind: "Logo",
-      duration: "3.0s", start: 7, end: 10,
-      description: "EXAMPLE: A small mark holds, then the wordmark draws on as a tagline fades in beside it.",
-      cutNote: "Dissolve · Static · Mark settles, wordmark draws left to right",
-      techniques: ["Morph", "Kinetic type"],
-      prompt: "EXAMPLE PROMPT — logo mark holds on a dark field, wordmark draws on, short tagline fades in. No product UI yet.",
-      filming: "No filming indicated",
-      estimatedNeeds: "EXAMPLE: 1 official logo — reused across the film",
-      recipe: [
-        { time: "0.0s", kind: "Technique", value: "Morph" },
-        { time: "1.2s", kind: "Text", value: "Wordmark" },
-        { time: "2.0s", kind: "Text", value: "Tagline fades in" }
+      "id": 3,
+      "number": "03",
+      "sectionId": "s1",
+      "type": "Hook",
+      "kind": "Title card",
+      "duration": "1.3s",
+      "start": 3.733,
+      "end": 5.066,
+      "description": "On black, a white-to-green letter B beside a green pill mark holds for a beat, then the sentence “But which video actually” types out left to right with a blinking cursor, “video” in green, and the line fades out.",
+      "cutNote": "Cut → Cut · Static · Medium white sans-serif, the word “video” in green, letters appear one by one with a vertical cursor",
+      "techniques": [
+        "Kinetic type"
+      ],
+      "prompt": "Scene 03 of Pulse's 0:52 SaaS launch film (Hook, Title card, 1.3s, 16:9, 30 fps). On black, a white-to-green letter B beside a green pill mark holds for a beat, then the sentence “But which video actually” types out left to right with a blinking cursor, “video” in green, and the line fades out. Typography: Medium white sans-serif, the word “video” in green, letters appear one by one with a vertical cursor. On-screen text: “But which video actually”. Techniques: Kinetic type. Camera: Static. Transition: cut in, cut out. Palette: #000102, #405348, #bfcac7.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s03.jpg",
+      "recipe": [
+        {
+          "time": "0.1s",
+          "kind": "Technique",
+          "value": "Kinetic type"
+        },
+        {
+          "time": "0.5s",
+          "kind": "Text",
+          "value": "“But which video actually” · scale"
+        }
       ]
     },
     {
-      id: 4, number: "04", sectionId: "s2", type: "Product intro", kind: "UI",
-      duration: "5.0s", start: 10, end: 15,
-      description: "EXAMPLE: A laptop mockup scales into frame and the dashboard UI tilts gently as the first screen settles.",
-      cutNote: "Cut → Cut · Slow tilt · 3D device, UI sharp",
-      techniques: ["3D mockup", "UI tilt"],
-      prompt: "EXAMPLE PROMPT — laptop mockup scales in on a dark field, dashboard already populated, slow tilt, no cursor yet.",
-      filming: "No filming indicated",
-      estimatedNeeds: "EXAMPLE: 1 capture group — your screens or recordings · 1 3D passage",
-      recipe: [
-        { time: "0.0s", kind: "UI", value: "Laptop scales in" },
-        { time: "1.5s", kind: "Camera", value: "Slow tilt begins" },
-        { time: "3.0s", kind: "Text", value: "Product name labels the screen" }
+      "id": 4,
+      "number": "04",
+      "sectionId": "s1",
+      "type": "Hook",
+      "kind": "Title card",
+      "duration": "0.8s",
+      "start": 5.066,
+      "end": 5.866,
+      "description": "On a black field, the white sentence “But which video actually” scales into the center. A green rounded pill grows from a dot at its end and opens to reveal “sent them?” in white.",
+      "cutNote": "Cut → Cut · Static · White humanist sans, medium weight, sentence case, scales in; closing phrase in white inside an expanding green pill",
+      "techniques": [
+        "Kinetic type",
+        "Masking"
+      ],
+      "prompt": "Scene 04 of Pulse's 0:52 SaaS launch film (Hook, Title card, 0.8s, 16:9, 30 fps). On a black field, the white sentence “But which video actually” scales into the center. A green rounded pill grows from a dot at its end and opens to reveal “sent them?” in white. Typography: White humanist sans, medium weight, sentence case, scales in; closing phrase in white inside an expanding green pill. On-screen text: “But which video actually”, “sent them?”. Techniques: Kinetic type, Masking. Camera: Static. Transition: cut in, cut out. Palette: #000102, #4f5854, #31b35b.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s04.jpg",
+      "recipe": [
+        {
+          "time": "0.0s",
+          "kind": "Technique",
+          "value": "Kinetic type"
+        },
+        {
+          "time": "0.3s",
+          "kind": "Technique",
+          "value": "Masking"
+        },
+        {
+          "time": "0.5s",
+          "kind": "Text",
+          "value": "“sent them?”"
+        },
+        {
+          "time": "0.6s",
+          "kind": "Sound",
+          "value": "Oink"
+        }
       ]
     },
     {
-      id: 5, number: "05", sectionId: "s3", type: "Feature reveal", kind: "Title card",
-      duration: "4.0s", start: 15, end: 19,
-      description: "EXAMPLE: Feature name types on, one word at a time, then a short supporting line fades under it.",
-      cutNote: "Cut → Cut · Static · Word-by-word type-on",
-      techniques: ["Kinetic type"],
-      prompt: "EXAMPLE PROMPT — black card, feature name types on word by word, supporting line fades in underneath. Hold, then cut.",
-      filming: "No filming indicated",
-      estimatedNeeds: "EXAMPLE: Your copy and visual identity",
-      recipe: [
-        { time: "0.0s", kind: "Voice", value: "EXAMPLE — “see which channel actually closed the deal”" },
-        { time: "0.2s", kind: "Text", value: "Feature name types on" },
-        { time: "2.2s", kind: "Text", value: "Supporting line" }
+      "id": 5,
+      "number": "05",
+      "sectionId": "s1",
+      "type": "Hook",
+      "kind": "UI",
+      "duration": "0.8s",
+      "start": 5.866,
+      "end": 6.666,
+      "description": "On black, white text “But which video actually” pairs with a green pill reading “sent them?”. A phone mockup scales in, showing a man at a laptop in a TikTok-style feed with a green “Or this one?” badge.",
+      "cutNote": "Cut → Cut · Static · Large white sans-serif, medium weight; bold white text on green pill badges",
+      "techniques": [
+        "Kinetic type"
+      ],
+      "prompt": "Scene 05 of Pulse's 0:52 SaaS launch film (Hook, UI, 0.8s, 16:9, 30 fps). On black, white text “But which video actually” pairs with a green pill reading “sent them?”. A phone mockup scales in, showing a man at a laptop in a TikTok-style feed with a green “Or this one?” badge. Typography: Large white sans-serif, medium weight; bold white text on green pill badges. On-screen text: “But which video actually”, “sent them?”, “Or this one?”. Techniques: Kinetic type. Camera: Static. Transition: cut in, cut out. Palette: #000202, #24c05d, #987054.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s05.jpg",
+      "recipe": [
+        {
+          "time": "0.0s",
+          "kind": "Technique",
+          "value": "Kinetic type"
+        },
+        {
+          "time": "0.3s",
+          "kind": "Text",
+          "value": "“Q” · scale"
+        },
+        {
+          "time": "0.3s",
+          "kind": "Text",
+          "value": "“1.139” · scale"
+        },
+        {
+          "time": "0.3s",
+          "kind": "Text",
+          "value": "“29” · scale"
+        },
+        {
+          "time": "0.5s",
+          "kind": "Voice",
+          "value": "“one or this one meet pulse it lets you track conversions from your organic content from first”"
+        },
+        {
+          "time": "0.5s",
+          "kind": "Text",
+          "value": "“Or this one?” · scale"
+        },
+        {
+          "time": "0.5s",
+          "kind": "Text",
+          "value": "“thefunnelguy”"
+        }
       ]
     },
     {
-      id: 6, number: "06", sectionId: "s3", type: "Feature reveal", kind: "UI",
-      duration: "9.0s", start: 19, end: 28,
-      description: "EXAMPLE: Cursor clicks a filter; a chart animates and a detail panel slides in from the right.",
-      cutNote: "Cut → Cut · Slow scroll · Cursor demo over a tilted dashboard",
-      techniques: ["Cursor demo", "UI zoom"],
-      prompt: "EXAMPLE PROMPT — tilted dashboard, cursor clicks a filter, chart animates, a detail panel slides in from the right. Mid-tempo, keep labels readable.",
-      filming: "No filming indicated",
-      estimatedNeeds: "EXAMPLE: 1 capture group — your screens or recordings",
-      recipe: [
-        { time: "0.0s", kind: "Camera", value: "Hold on tilted dashboard" },
-        { time: "1.2s", kind: "UI", value: "Cursor clicks filter" },
-        { time: "2.0s", kind: "Sound", value: "Click" },
-        { time: "3.5s", kind: "UI", value: "Chart animates" },
-        { time: "6.0s", kind: "UI", value: "Detail panel slides in" }
+      "id": 6,
+      "number": "06",
+      "sectionId": "s1",
+      "type": "Hook",
+      "kind": "UI",
+      "duration": "0.4s",
+      "start": 6.666,
+      "end": 7.1,
+      "description": "On black, a TikTok-style card of a man at a laptop, labeled “This one?”, slides left as a green gradient card labeled “Or this one?” slides in from the right, both growing as they pass.",
+      "cutNote": "Cut → Cut · Static · White sans-serif in bright green rounded boxes, medium size; the second label scales in with its card.",
+      "techniques": [],
+      "prompt": "Scene 06 of Pulse's 0:52 SaaS launch film (Hook, UI, 0.4s, 16:9, 30 fps). On black, a TikTok-style card of a man at a laptop, labeled “This one?”, slides left as a green gradient card labeled “Or this one?” slides in from the right, both growing as they pass. Typography: White sans-serif in bright green rounded boxes, medium size; the second label scales in with its card.. On-screen text: “This one?”, “Or this one?”. Camera: Static. Transition: cut in, cut out. Palette: #040404, #23c25d, #917a58.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s06.jpg",
+      "recipe": [
+        {
+          "time": "0.1s",
+          "kind": "Sound",
+          "value": "Keyboard typing"
+        },
+        {
+          "time": "0.3s",
+          "kind": "Text",
+          "value": "“This one?”"
+        },
+        {
+          "time": "0.3s",
+          "kind": "Text",
+          "value": "“1.139” · slide, ease-out"
+        },
+        {
+          "time": "0.3s",
+          "kind": "Text",
+          "value": "“29” · slide, linear"
+        }
       ]
     },
     {
-      id: 7, number: "07", sectionId: "s3", type: "Feature reveal", kind: "UI",
-      duration: "8.0s", start: 28, end: 36,
-      description: "EXAMPLE: The view pulls back from one panel to a wider workspace as two more feature cards settle into place.",
-      cutNote: "Cut → Cut · Pull out · Cards settle with a soft overshoot",
-      techniques: ["Pull out", "3D mockup"],
-      prompt: "EXAMPLE PROMPT — pull out from a single panel to a wider workspace, two more feature cards settle with a soft overshoot.",
-      filming: "No filming indicated",
-      estimatedNeeds: "EXAMPLE: 1 capture group — your screens or recordings",
-      recipe: [
-        { time: "0.0s", kind: "Camera", value: "Pull out begins" },
-        { time: "2.5s", kind: "UI", value: "Second card settles" },
-        { time: "4.5s", kind: "UI", value: "Third card settles" }
+      "id": 7,
+      "number": "07",
+      "sectionId": "s1",
+      "type": "Hook",
+      "kind": "Live action",
+      "duration": "1.4s",
+      "start": 7.1,
+      "end": 8.533,
+      "description": "A man in a black sweater points at his laptop in a teal-lit room as a green pill caption “Or this one?” scales in over his chest; a social post card with engagement counts sits at the left edge, then a large green Q outline wipes across.",
+      "cutNote": "Cut → Cut · Pull out · Bold white sans-serif in a rounded green pill, scaling in to full size",
+      "techniques": [
+        "Kinetic type"
+      ],
+      "prompt": "Scene 07 of Pulse's 0:52 SaaS launch film (Hook, Live action, 1.4s, 16:9, 30 fps). A man in a black sweater points at his laptop in a teal-lit room as a green pill caption “Or this one?” scales in over his chest; a social post card with engagement counts sits at the left edge, then a large green Q outline wipes across. Typography: Bold white sans-serif in a rounded green pill, scaling in to full size. On-screen text: “Or this one?”. Techniques: Kinetic type. Camera: Pull out. Transition: cut in, cut out. Palette: #03080a, #203835, #738362.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s07.jpg",
+      "recipe": [
+        {
+          "time": "0.0s",
+          "kind": "Camera",
+          "value": "Pan · ease-out, 0.5s"
+        },
+        {
+          "time": "0.1s",
+          "kind": "Text",
+          "value": "“Q”"
+        },
+        {
+          "time": "0.1s",
+          "kind": "Text",
+          "value": "“Δ”"
+        },
+        {
+          "time": "0.6s",
+          "kind": "Text",
+          "value": "“253K”"
+        },
+        {
+          "time": "0.7s",
+          "kind": "Camera",
+          "value": "Pull out · ease-in, 0.9s"
+        },
+        {
+          "time": "0.9s",
+          "kind": "Technique",
+          "value": "Kinetic type"
+        }
       ]
     },
     {
-      id: 8, number: "08", sectionId: "s4", type: "CTA", kind: "Title card",
-      duration: "4.0s", start: 36, end: 40,
-      description: "EXAMPLE: A centered line assembles, with the offer set inside a rounded button that scales in, then the frame fades to black.",
-      cutNote: "Cut → Fade · Static · Button scales in, then hold",
-      techniques: ["Kinetic type"],
-      prompt: "EXAMPLE PROMPT — black frame, centered CTA line, offer inside a rounded button that scales in. Hold, fade to black. No extra UI.",
-      filming: "No filming indicated",
-      estimatedNeeds: "EXAMPLE: Your copy, URL and visual identity",
-      recipe: [
-        { time: "0.0s", kind: "Text", value: "“Start your”" },
-        { time: "0.6s", kind: "UI", value: "Offer button scales in" },
-        { time: "1.2s", kind: "Text", value: "“today.”" },
-        { time: "3.4s", kind: "Camera", value: "Fade to black" }
+      "id": 8,
+      "number": "08",
+      "sectionId": "s2",
+      "type": "Product intro",
+      "kind": "Title card",
+      "duration": "0.8s",
+      "start": 8.533,
+      "end": 9.333,
+      "description": "The word Meet in large green gradient type holds on a black background with a soft green glow below. The text fades out, leaving a green circle with a darker crescent centered in the dark.",
+      "cutNote": "Cut → Cut · Push in · Large thin sans-serif, green-to-gray gradient, 69% of frame height, still then fades out",
+      "techniques": [],
+      "prompt": "Scene 08 of Pulse's 0:52 SaaS launch film (Product intro, Title card, 0.8s, 16:9, 30 fps). The word Meet in large green gradient type holds on a black background with a soft green glow below. The text fades out, leaving a green circle with a darker crescent centered in the dark. Typography: Large thin sans-serif, green-to-gray gradient, 69% of frame height, still then fades out. On-screen text: “Meet”. Camera: Push in. Transition: cut in, cut out. Palette: #020b06, #265536, #429e63.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s08.jpg",
+      "recipe": [
+        {
+          "time": "0.0s",
+          "kind": "Text",
+          "value": "“Meet”"
+        },
+        {
+          "time": "0.4s",
+          "kind": "Music",
+          "value": "Sweep"
+        },
+        {
+          "time": "0.5s",
+          "kind": "Sound",
+          "value": "Whoosh"
+        },
+        {
+          "time": "0.5s",
+          "kind": "Camera",
+          "value": "Push in · ease-in, 0.6s"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "number": "09",
+      "sectionId": "s2",
+      "type": "Product intro",
+      "kind": "Logo",
+      "duration": "1.4s",
+      "start": 9.333,
+      "end": 10.7,
+      "description": "A green circular mark sits centered on a black background, then the white wordmark Pulse fades in to its right, forming the centered brand logo lockup.",
+      "cutNote": "Cut → Cut · Push in · Large white sans-serif, regular weight, wordmark appears beside the green dot",
+      "techniques": [
+        "Kinetic type"
+      ],
+      "prompt": "Scene 09 of Pulse's 0:52 SaaS launch film (Product intro, Logo, 1.4s, 16:9, 30 fps). A green circular mark sits centered on a black background, then the white wordmark Pulse fades in to its right, forming the centered brand logo lockup. Typography: Large white sans-serif, regular weight, wordmark appears beside the green dot. On-screen text: “Pulse”. Techniques: Kinetic type. Camera: Push in. Transition: cut in, cut out. Palette: #000100, #063519, #4ca25d.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s09.jpg",
+      "recipe": [
+        {
+          "time": "0.7s",
+          "kind": "Technique",
+          "value": "Kinetic type"
+        },
+        {
+          "time": "0.8s",
+          "kind": "Logo",
+          "value": "Logo appears · “Pulse”"
+        },
+        {
+          "time": "0.8s",
+          "kind": "Text",
+          "value": "“Pulse”"
+        },
+        {
+          "time": "1.2s",
+          "kind": "Camera",
+          "value": "Pull out · ease-out, 1.4s"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "number": "10",
+      "sectionId": "s3",
+      "type": "Feature reveal",
+      "kind": "3D",
+      "duration": "2.1s",
+      "start": 10.7,
+      "end": 12.8,
+      "description": "A tilted 3D dashboard mockup of a creator funnel overview scrolls upward inside its frame while dark gray kinetic text with green accent words reads “It lets you track conversions” above and “from your organic” to the right.",
+      "cutNote": "Cut → Cut · Pull out · Large dark gray sans-serif with green accent words, slides vertically into frame",
+      "techniques": [
+        "3D mockup",
+        "Kinetic type"
+      ],
+      "prompt": "Scene 10 of Pulse's 0:52 SaaS launch film (Feature reveal, 3D, 2.1s, 16:9, 30 fps). A tilted 3D dashboard mockup of a creator funnel overview scrolls upward inside its frame while dark gray kinetic text with green accent words reads “It lets you track conversions” above and “from your organic” to the right. Typography: Large dark gray sans-serif with green accent words, slides vertically into frame. On-screen text: “Pulse”, “It lets you track conversions”, “from your organic”. Techniques: 3D mockup, Kinetic type. Camera: Pull out. Transition: cut in, cut out. Palette: #fafcfc, #191f21, #90b49d.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s10.jpg",
+      "recipe": [
+        {
+          "time": "0.0s",
+          "kind": "Technique",
+          "value": "3D mockup"
+        },
+        {
+          "time": "0.5s",
+          "kind": "Technique",
+          "value": "Kinetic type"
+        },
+        {
+          "time": "1.5s",
+          "kind": "Camera",
+          "value": "Pull out · ease-in-out, 3.3s"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "number": "11",
+      "sectionId": "s3",
+      "type": "Feature reveal",
+      "kind": "UI",
+      "duration": "1.1s",
+      "start": 12.8,
+      "end": 13.866,
+      "description": "A white dashboard card lists ranked content pieces on the left beside a large black-and-green headline reading from your organic content. The whole view quickly cross-fades into a conversion funnel showing clicks, leads, calls and customers with a YouTube revenue total.",
+      "cutNote": "Cut → Cut · Pull out · Large bold sans-serif, black and green, fades in then out.",
+      "techniques": [],
+      "prompt": "Scene 11 of Pulse's 0:52 SaaS launch film (Feature reveal, UI, 1.1s, 16:9, 30 fps). A white dashboard card lists ranked content pieces on the left beside a large black-and-green headline reading from your organic content. The whole view quickly cross-fades into a conversion funnel showing clicks, leads, calls and customers with a YouTube revenue total. Typography: Large bold sans-serif, black and green, fades in then out.. On-screen text: “from your organic content.”. Camera: Pull out. Transition: cut in, cut out. Palette: #fbfdfd, #d1dfd7, #918e8d.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s11.jpg",
+      "recipe": []
+    },
+    {
+      "id": 12,
+      "number": "12",
+      "sectionId": "s3",
+      "type": "Feature reveal",
+      "kind": "UI",
+      "duration": "1.6s",
+      "start": 13.866,
+      "end": 15.466,
+      "description": "A white dashboard list of channel cards, each with a revenue figure and a funnel of clicks, leads, calls and customers, scrolls upward. The headline “From first touch” and “to conversion.” appears word by word on the left and right edges.",
+      "cutNote": "Cut → Cut · Pull out · Medium dark gray sans-serif, regular weight, words appear sequentially on each side",
+      "techniques": [
+        "Kinetic type"
+      ],
+      "prompt": "Scene 12 of Pulse's 0:52 SaaS launch film (Feature reveal, UI, 1.6s, 16:9, 30 fps). A white dashboard list of channel cards, each with a revenue figure and a funnel of clicks, leads, calls and customers, scrolls upward. The headline “From first touch” and “to conversion.” appears word by word on the left and right edges. Typography: Medium dark gray sans-serif, regular weight, words appear sequentially on each side. On-screen text: “From first touch”, “to conversion.”. Techniques: Kinetic type. Camera: Pull out. Transition: cut in, cut out. Palette: #fdfeff, #f1edf0, #cecfd1.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s12.jpg",
+      "recipe": [
+        {
+          "time": "0.3s",
+          "kind": "Voice",
+          "value": "“touch to conversion everything is in pulse just drag your content sources in and that's it you're”"
+        },
+        {
+          "time": "0.5s",
+          "kind": "Technique",
+          "value": "Kinetic type"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "number": "13",
+      "sectionId": "s4",
+      "type": "Feature reveal",
+      "kind": "Title card",
+      "duration": "1.6s",
+      "start": 15.466,
+      "end": 17.066,
+      "description": "On a near-white background, the phrase 'Everything is in' builds word by word in dark gray sans, a green dot with a soft pulsing halo pops in after 'in', and 'Pulse' fades in to the right.",
+      "cutNote": "Cut → Cut · Static · Large dark gray geometric sans, regular weight, words fade in sequentially; 'Pulse' in lighter gray beside a pulsing green dot mark.",
+      "techniques": [
+        "Kinetic type"
+      ],
+      "prompt": "Scene 13 of Pulse's 0:52 SaaS launch film (Feature reveal, Title card, 1.6s, 16:9, 30 fps). On a near-white background, the phrase 'Everything is in' builds word by word in dark gray sans, a green dot with a soft pulsing halo pops in after 'in', and 'Pulse' fades in to the right. Typography: Large dark gray geometric sans, regular weight, words fade in sequentially; 'Pulse' in lighter gray beside a pulsing green dot mark.. On-screen text: “Everything is in”, “Pulse”. Techniques: Kinetic type. Camera: Static. Transition: cut in, cut out. Palette: #fcfefe, #c8cdcc, #9aaa9f.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s13.jpg",
+      "recipe": [
+        {
+          "time": "0.3s",
+          "kind": "Text",
+          "value": "“Everything is in” · scale"
+        },
+        {
+          "time": "0.5s",
+          "kind": "Technique",
+          "value": "Kinetic type"
+        },
+        {
+          "time": "1.3s",
+          "kind": "Logo",
+          "value": "Logo appears · “Pulse”"
+        },
+        {
+          "time": "1.3s",
+          "kind": "Text",
+          "value": "“Pulse”"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "number": "14",
+      "sectionId": "s4",
+      "type": "Feature reveal",
+      "kind": "3D",
+      "duration": "0.8s",
+      "start": 17.066,
+      "end": 17.866,
+      "description": "A headline reading Everything is in Pulse with a green dot scales in over a dotted white background, then fades out as the view tilts into a 3D-angled product UI, where a black cursor hovers beside a YouTube node in a content source graph.",
+      "cutNote": "Cut → Cut · Pull out · Large dark gray sans, medium weight, the first half scales in while Pulse holds still",
+      "techniques": [
+        "Kinetic type",
+        "3D mockup",
+        "Cursor demo"
+      ],
+      "prompt": "Scene 14 of Pulse's 0:52 SaaS launch film (Feature reveal, 3D, 0.8s, 16:9, 30 fps). A headline reading Everything is in Pulse with a green dot scales in over a dotted white background, then fades out as the view tilts into a 3D-angled product UI, where a black cursor hovers beside a YouTube node in a content source graph. Typography: Large dark gray sans, medium weight, the first half scales in while Pulse holds still. On-screen text: “Everything is in Pulse”. Techniques: Kinetic type, 3D mockup, Cursor demo. Camera: Pull out. Transition: cut in, cut out. Palette: #fbfdfd, #cabfc6, #92544c.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s14.jpg",
+      "recipe": [
+        {
+          "time": "0.1s",
+          "kind": "Technique",
+          "value": "Kinetic type"
+        },
+        {
+          "time": "0.2s",
+          "kind": "Camera",
+          "value": "Pull out · ease-out, 1.7s"
+        },
+        {
+          "time": "0.5s",
+          "kind": "Technique",
+          "value": "3D mockup"
+        },
+        {
+          "time": "0.5s",
+          "kind": "Technique",
+          "value": "Cursor demo"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "number": "15",
+      "sectionId": "s4",
+      "type": "Feature reveal",
+      "kind": "3D",
+      "duration": "1.3s",
+      "start": 17.866,
+      "end": 19.2,
+      "description": "A white funnel canvas tilts in 3D perspective while the camera pulls back to reveal the full window and sidebar. A black cursor glides down the dotted grid, where social icons link to a globe node.",
+      "cutNote": "Cut → Cut · Pull out",
+      "techniques": [
+        "3D mockup",
+        "UI zoom",
+        "Cursor demo"
+      ],
+      "prompt": "Scene 15 of Pulse's 0:52 SaaS launch film (Feature reveal, 3D, 1.3s, 16:9, 30 fps). A white funnel canvas tilts in 3D perspective while the camera pulls back to reveal the full window and sidebar. A black cursor glides down the dotted grid, where social icons link to a globe node. Techniques: 3D mockup, UI zoom, Cursor demo. Camera: Pull out. Transition: cut in, cut out. Palette: #fbfdfd, #d1cfd8, #80615e.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s15.jpg",
+      "recipe": [
+        {
+          "time": "0.2s",
+          "kind": "Technique",
+          "value": "3D mockup"
+        },
+        {
+          "time": "0.6s",
+          "kind": "Technique",
+          "value": "UI zoom"
+        },
+        {
+          "time": "0.8s",
+          "kind": "Technique",
+          "value": "Cursor demo"
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "number": "16",
+      "sectionId": "s4",
+      "type": "Feature reveal",
+      "kind": "Title card",
+      "duration": "0.8s",
+      "start": 19.2,
+      "end": 19.967,
+      "description": "On a plain white field, the line “And that's it!” types out letter by letter in the center, then holds in a locked-off frame.",
+      "cutNote": "Cut → Cut · Static · Medium dark gray geometric sans, regular weight, centered, revealed by a typing animation",
+      "techniques": [
+        "Kinetic type"
+      ],
+      "prompt": "Scene 16 of Pulse's 0:52 SaaS launch film (Feature reveal, Title card, 0.8s, 16:9, 30 fps). On a plain white field, the line “And that's it!” types out letter by letter in the center, then holds in a locked-off frame. Typography: Medium dark gray geometric sans, regular weight, centered, revealed by a typing animation. On-screen text: “And that's it!”. Techniques: Kinetic type. Camera: Static. Transition: cut in, cut out. Palette: #fefefe, #919190, #c5c5c5.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s16.jpg",
+      "recipe": [
+        {
+          "time": "0.0s",
+          "kind": "Text",
+          "value": "“And that's it!”"
+        },
+        {
+          "time": "0.1s",
+          "kind": "Technique",
+          "value": "Kinetic type"
+        },
+        {
+          "time": "0.7s",
+          "kind": "Camera",
+          "value": "Pan · ease-out, 0.5s"
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "number": "17",
+      "sectionId": "s5",
+      "type": "Feature reveal",
+      "kind": "UI",
+      "duration": "1.4s",
+      "start": 19.967,
+      "end": 21.333,
+      "description": "A light analytics dashboard resolves from a faded state to full opacity under a dark Overview stats bar. The headline darkens in at the top while an oversized word slides in from the left edge.",
+      "cutNote": "Cut → Cut · Pull out · Large dark gray sans-serif, regular weight; the top headline is static while an oversized word slides in from the left.",
+      "techniques": [
+        "Kinetic type"
+      ],
+      "prompt": "Scene 17 of Pulse's 0:52 SaaS launch film (Feature reveal, UI, 1.4s, 16:9, 30 fps). A light analytics dashboard resolves from a faded state to full opacity under a dark Overview stats bar. The headline darkens in at the top while an oversized word slides in from the left edge. Typography: Large dark gray sans-serif, regular weight; the top headline is static while an oversized word slides in from the left.. On-screen text: “You're ready to go.”, “Stop”. Techniques: Kinetic type. Camera: Pull out. Transition: cut in, cut out. Palette: #fafcfc, #141a1d, #99a19f.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s17.jpg",
+      "recipe": [
+        {
+          "time": "0.3s",
+          "kind": "Voice",
+          "value": "“ready to go stop making content for views double down on the content that actually made you money”"
+        },
+        {
+          "time": "0.7s",
+          "kind": "Camera",
+          "value": "Pull out · ease-in, 0.5s"
+        },
+        {
+          "time": "1.0s",
+          "kind": "Technique",
+          "value": "Kinetic type"
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "number": "18",
+      "sectionId": "s5",
+      "type": "Feature reveal",
+      "kind": "UI",
+      "duration": "2.7s",
+      "start": 21.333,
+      "end": 24.0,
+      "description": "A black headline types out word by word on white, ending with views. in a green chip. The line slides up as a browser mockup of the Creator Funnel dashboard slides in from the right, a cursor resting on the Content menu, while Double down on appears at left.",
+      "cutNote": "Cut → Cut · Static · Large black neutral sans-serif, regular weight, headline words slide in left to right; views. in white bold on a green rounded chip; Double down on in black set",
+      "techniques": [
+        "Kinetic type",
+        "Cursor demo"
+      ],
+      "prompt": "Scene 18 of Pulse's 0:52 SaaS launch film (Feature reveal, UI, 2.7s, 16:9, 30 fps). A black headline types out word by word on white, ending with views. in a green chip. The line slides up as a browser mockup of the Creator Funnel dashboard slides in from the right, a cursor resting on the Content menu, while Double down on appears at left. Typography: Large black neutral sans-serif, regular weight, headline words slide in left to right; views. in white bold on a green rounded chip; Double down on in black set. On-screen text: “Stop making content for”, “views.”, “Double down on”. Techniques: Kinetic type, Cursor demo. Camera: Static. Transition: cut in, cut out. Palette: #fcfefe, #939393, #5bd185.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s18.jpg",
+      "recipe": [
+        {
+          "time": "0.0s",
+          "kind": "Text",
+          "value": "“Stop making content for” · slide, ease-in"
+        },
+        {
+          "time": "0.8s",
+          "kind": "Technique",
+          "value": "Kinetic type"
+        },
+        {
+          "time": "1.3s",
+          "kind": "Text",
+          "value": "“views.” · slide, ease-in"
+        },
+        {
+          "time": "2.0s",
+          "kind": "Technique",
+          "value": "Cursor demo"
+        },
+        {
+          "time": "2.2s",
+          "kind": "Camera",
+          "value": "Pull out · ease-in, 5.7s"
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "number": "19",
+      "sectionId": "s5",
+      "type": "Feature reveal",
+      "kind": "3D",
+      "duration": "0.8s",
+      "start": 24.0,
+      "end": 24.8,
+      "description": "A tilted 3D browser mockup of a dashboard fills the right side; a left headline reads 'Double down on the content'. A cursor slides up the sidebar and clicks Content, swapping the right panel from Overview to Content and changing the revenue figure.",
+      "cutNote": "Cut → Cut · Static · Medium-weight sans, dark gray with the closing phrase in green, static left-aligned",
+      "techniques": [
+        "3D mockup",
+        "Cursor demo"
+      ],
+      "prompt": "Scene 19 of Pulse's 0:52 SaaS launch film (Feature reveal, 3D, 0.8s, 16:9, 30 fps). A tilted 3D browser mockup of a dashboard fills the right side; a left headline reads 'Double down on the content'. A cursor slides up the sidebar and clicks Content, swapping the right panel from Overview to Content and changing the revenue figure. Typography: Medium-weight sans, dark gray with the closing phrase in green, static left-aligned. On-screen text: “Double down on the content”. Techniques: 3D mockup, Cursor demo. Camera: Static. Transition: cut in, cut out. Palette: #fafcfc, #17382d, #9da8a5.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s19.jpg",
+      "recipe": [
+        {
+          "time": "0.0s",
+          "kind": "Technique",
+          "value": "3D mockup"
+        },
+        {
+          "time": "0.5s",
+          "kind": "Sound",
+          "value": "Click"
+        },
+        {
+          "time": "0.5s",
+          "kind": "Technique",
+          "value": "Cursor demo"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "number": "20",
+      "sectionId": "s5",
+      "type": "Feature reveal",
+      "kind": "UI",
+      "duration": "1.9s",
+      "start": 24.8,
+      "end": 26.666,
+      "description": "A content dashboard lists YouTube videos with revenue and RPM columns. The headline at the top finishes word by word while the top row, a video earning $10,199, floats above the list with a soft green glow.",
+      "cutNote": "Cut → Cut · Pull out · Large black sans-serif headline, 'made you money' in green, words appear one by one",
+      "techniques": [
+        "Kinetic type"
+      ],
+      "prompt": "Scene 20 of Pulse's 0:52 SaaS launch film (Feature reveal, UI, 1.9s, 16:9, 30 fps). A content dashboard lists YouTube videos with revenue and RPM columns. The headline at the top finishes word by word while the top row, a video earning $10,199, floats above the list with a soft green glow. Typography: Large black sans-serif headline, 'made you money' in green, words appear one by one. On-screen text: “that actually made you money.”. Techniques: Kinetic type. Camera: Pull out. Transition: cut in, cut out. Palette: #f6fcfa, #c6e3d2, #877e77.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s20.jpg",
+      "recipe": [
+        {
+          "time": "0.5s",
+          "kind": "Technique",
+          "value": "Kinetic type"
+        },
+        {
+          "time": "0.6s",
+          "kind": "Sound",
+          "value": "Click"
+        },
+        {
+          "time": "1.4s",
+          "kind": "Voice",
+          "value": "“and know which platform makes you the most.”"
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "number": "21",
+      "sectionId": "s6",
+      "type": "Feature reveal",
+      "kind": "UI",
+      "duration": "0.8s",
+      "start": 26.666,
+      "end": 27.466,
+      "description": "A flat dashboard mockup with a sidebar menu and a dark revenue card holds the right side of the frame. On the left, the line “And know” fades in in dark gray, then “which platform” fades in beneath it in green, while the interface eases slightly wider.",
+      "cutNote": "Cut → Cut · Static · Large dark gray sans-serif, regular weight, with the second line in green; lines fade in in sequence",
+      "techniques": [
+        "Kinetic type",
+        "UI zoom"
+      ],
+      "prompt": "Scene 21 of Pulse's 0:52 SaaS launch film (Feature reveal, UI, 0.8s, 16:9, 30 fps). A flat dashboard mockup with a sidebar menu and a dark revenue card holds the right side of the frame. On the left, the line “And know” fades in in dark gray, then “which platform” fades in beneath it in green, while the interface eases slightly wider. Typography: Large dark gray sans-serif, regular weight, with the second line in green; lines fade in in sequence. On-screen text: “And know”, “which platform”. Techniques: Kinetic type, UI zoom. Camera: Static. Transition: cut in, cut out. Palette: #f8fbfa, #9ba5a3, #1f3d32.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s21.jpg",
+      "recipe": [
+        {
+          "time": "0.0s",
+          "kind": "Sound",
+          "value": "Click"
+        },
+        {
+          "time": "0.1s",
+          "kind": "Technique",
+          "value": "Kinetic type"
+        },
+        {
+          "time": "0.1s",
+          "kind": "Technique",
+          "value": "UI zoom"
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "number": "22",
+      "sectionId": "s6",
+      "type": "Feature reveal",
+      "kind": "UI",
+      "duration": "0.8s",
+      "start": 27.466,
+      "end": 28.266,
+      "description": "A marketing dashboard titled Sources shows channel cards for YouTube, LinkedIn, Instagram and X with revenue and funnel numbers. The view pulls back from a close-up of the title to the full grid as the caption makes you the most. slides in on the right.",
+      "cutNote": "Cut → Cut · Pull out · Large dark gray sans, the last two words in green",
+      "techniques": [
+        "UI zoom"
+      ],
+      "prompt": "Scene 22 of Pulse's 0:52 SaaS launch film (Feature reveal, UI, 0.8s, 16:9, 30 fps). A marketing dashboard titled Sources shows channel cards for YouTube, LinkedIn, Instagram and X with revenue and funnel numbers. The view pulls back from a close-up of the title to the full grid as the caption makes you the most. slides in on the right. Typography: Large dark gray sans, the last two words in green. On-screen text: “makes you the most.”. Techniques: UI zoom. Camera: Pull out. Transition: cut in, cut out. Palette: #fbfdfd, #e4e8e9, #afbab3.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s22.jpg",
+      "recipe": [
+        {
+          "time": "0.0s",
+          "kind": "Technique",
+          "value": "UI zoom"
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "number": "23",
+      "sectionId": "s6",
+      "type": "Feature reveal",
+      "kind": "UI",
+      "duration": "0.8s",
+      "start": 28.266,
+      "end": 29.066,
+      "description": "A revenue dashboard with four source cards sits left of the headline “makes you the most.” The panel then scales down and ghosts as a contacts funnel view with a leads table slides in to fill the frame.",
+      "cutNote": "Cut → Cut · Pan · Large black sans-serif, “the most.” in green, static then fading out",
+      "techniques": [
+        "UI zoom"
+      ],
+      "prompt": "Scene 23 of Pulse's 0:52 SaaS launch film (Feature reveal, UI, 0.8s, 16:9, 30 fps). A revenue dashboard with four source cards sits left of the headline “makes you the most.” The panel then scales down and ghosts as a contacts funnel view with a leads table slides in to fill the frame. Typography: Large black sans-serif, “the most.” in green, static then fading out. On-screen text: “makes you the most.”. Techniques: UI zoom. Camera: Pan. Transition: cut in, cut out. Palette: #fbfdfd, #e0e8e6, #95bba1.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s23.jpg",
+      "recipe": [
+        {
+          "time": "0.3s",
+          "kind": "Sound",
+          "value": "Click"
+        },
+        {
+          "time": "0.4s",
+          "kind": "Voice",
+          "value": "“Track your leads.”"
+        },
+        {
+          "time": "0.5s",
+          "kind": "Technique",
+          "value": "UI zoom"
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "number": "24",
+      "sectionId": "s7",
+      "type": "Feature reveal",
+      "kind": "UI",
+      "duration": "1.1s",
+      "start": 29.066,
+      "end": 30.133,
+      "description": "A light CRM dashboard shows a Contacts page with four stat cards and a contact table, under a headline where “Track” sits in a green pill. The view drifts down a few pixels, revealing one more row of the list.",
+      "cutNote": "Cut → Cut · Static · Bold geometric sans headline, medium size, “Track” in white inside a green rounded pill, “your leads.” in black, static",
+      "techniques": [],
+      "prompt": "Scene 24 of Pulse's 0:52 SaaS launch film (Feature reveal, UI, 1.1s, 16:9, 30 fps). A light CRM dashboard shows a Contacts page with four stat cards and a contact table, under a headline where “Track” sits in a green pill. The view drifts down a few pixels, revealing one more row of the list. Typography: Bold geometric sans headline, medium size, “Track” in white inside a green rounded pill, “your leads.” in black, static. On-screen text: “Track your leads.”. Camera: Static. Transition: cut in, cut out. Palette: #fafcfc, #c2c3c5, #4ed384.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s24.jpg",
+      "recipe": [
+        {
+          "time": "0.5s",
+          "kind": "Camera",
+          "value": "Pull out · ease-in-out, 1.1s"
+        },
+        {
+          "time": "0.9s",
+          "kind": "Voice",
+          "value": "“Someone booked a call with you?”"
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "number": "25",
+      "sectionId": "s7",
+      "type": "Feature reveal",
+      "kind": "UI",
+      "duration": "4.5s",
+      "start": 30.133,
+      "end": 34.666,
+      "description": "A green wash over a funnel dashboard fades as the view scrolls to a contacts table; a cursor hovers a row, a tooltip pops, then a detail panel slides in listing the prospect's touchpoints.",
+      "cutNote": "Cut → Cut · Pan",
+      "techniques": [
+        "UI zoom",
+        "Cursor demo"
+      ],
+      "prompt": "Scene 25 of Pulse's 0:52 SaaS launch film (Feature reveal, UI, 4.5s, 16:9, 30 fps). A green wash over a funnel dashboard fades as the view scrolls to a contacts table; a cursor hovers a row, a tooltip pops, then a detail panel slides in listing the prospect's touchpoints. Techniques: UI zoom, Cursor demo. Camera: Pan. Transition: cut in, cut out. Palette: #f6fcfa, #57d588, #c6e1d0.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s25.jpg",
+      "recipe": [
+        {
+          "time": "0.9s",
+          "kind": "Camera",
+          "value": "Pan · ease-in-out, 0.3s"
+        },
+        {
+          "time": "1.2s",
+          "kind": "Technique",
+          "value": "UI zoom"
+        },
+        {
+          "time": "1.3s",
+          "kind": "Voice",
+          "value": "“Don't walk into that call without knowing your prospect.”"
+        },
+        {
+          "time": "1.4s",
+          "kind": "Transition",
+          "value": "Gradual transition · 0.2s"
+        },
+        {
+          "time": "1.5s",
+          "kind": "Camera",
+          "value": "Push in · ease-out, 0.5s"
+        },
+        {
+          "time": "2.3s",
+          "kind": "Camera",
+          "value": "Pan · ease-in-out, 0.7s"
+        },
+        {
+          "time": "2.4s",
+          "kind": "Technique",
+          "value": "Cursor demo"
+        },
+        {
+          "time": "3.8s",
+          "kind": "Camera",
+          "value": "Pan · ease-in-out, 1.7s"
+        },
+        {
+          "time": "4.2s",
+          "kind": "Voice",
+          "value": "“See every single step they took”"
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "number": "26",
+      "sectionId": "s7",
+      "type": "Feature reveal",
+      "kind": "UI",
+      "duration": "0.8s",
+      "start": 34.666,
+      "end": 35.466,
+      "description": "A white journey card for Rachel Simmons floats over a blurred leads table, its timeline filling with touchpoints that end in a $3,500 conversion. On the left, the headline builds word by word into 'See every single step'.",
+      "cutNote": "Cut → Cut · Static · Medium dark sans with green accent words, words appear one by one",
+      "techniques": [
+        "Kinetic type"
+      ],
+      "prompt": "Scene 26 of Pulse's 0:52 SaaS launch film (Feature reveal, UI, 0.8s, 16:9, 30 fps). A white journey card for Rachel Simmons floats over a blurred leads table, its timeline filling with touchpoints that end in a $3,500 conversion. On the left, the headline builds word by word into 'See every single step'. Typography: Medium dark sans with green accent words, words appear one by one. On-screen text: “See every single step”. Techniques: Kinetic type. Camera: Static. Transition: cut in, cut out. Palette: #fafcfc, #c4e4d0, #44cd76.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s26.jpg",
+      "recipe": [
+        {
+          "time": "0.3s",
+          "kind": "Technique",
+          "value": "Kinetic type"
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "number": "27",
+      "sectionId": "s7",
+      "type": "Feature reveal",
+      "kind": "UI",
+      "duration": "2.9s",
+      "start": 35.466,
+      "end": 38.333,
+      "description": "A flat contact-detail card for Rachel Simmons sits on the right over a white-to-green gradient, its timeline of touchpoints settling into place. The black-and-green headline completes word by word on the left, then the card slides off to the right to reveal a dark pill reading 07.",
+      "cutNote": "Cut → Cut · Pull out · Large black sans-serif headline with the key phrase in green; a bold white number on a dark rounded pill.",
+      "techniques": [
+        "Kinetic type"
+      ],
+      "prompt": "Scene 27 of Pulse's 0:52 SaaS launch film (Feature reveal, UI, 2.9s, 16:9, 30 fps). A flat contact-detail card for Rachel Simmons sits on the right over a white-to-green gradient, its timeline of touchpoints settling into place. The black-and-green headline completes word by word on the left, then the card slides off to the right to reveal a dark pill reading 07. Typography: Large black sans-serif headline with the key phrase in green; a bold white number on a dark rounded pill.. On-screen text: “See every single step they took before deciding to reach out.”, “07”. Techniques: Kinetic type. Camera: Pull out. Transition: cut in, cut out. Palette: #f6fcfa, #b4d6c2, #3bcc70.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s27.jpg",
+      "recipe": [
+        {
+          "time": "0.5s",
+          "kind": "Technique",
+          "value": "Kinetic type"
+        },
+        {
+          "time": "0.9s",
+          "kind": "Voice",
+          "value": "“before deciding to reach out.”"
+        },
+        {
+          "time": "2.1s",
+          "kind": "Camera",
+          "value": "Pull out · ease-in, 0.8s"
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "number": "28",
+      "sectionId": "s8",
+      "type": "Feature reveal",
+      "kind": "Graphics",
+      "duration": "2.5s",
+      "start": 38.333,
+      "end": 40.8,
+      "description": "A horizontal funnel infographic scrolls left across a white background. Black pills show 2.7K Clicks, 38 Calls and 16 Customers, green squares with arrows carry the conversion percentages, and the strip ends on the green Pulse logo and wordmark.",
+      "cutNote": "Cut → Cut · Static · Bold white sans inside black pills, gray wordmark, all sliding left as one strip",
+      "techniques": [
+        "Kinetic type"
+      ],
+      "prompt": "Scene 28 of Pulse's 0:52 SaaS launch film (Feature reveal, Graphics, 2.5s, 16:9, 30 fps). A horizontal funnel infographic scrolls left across a white background. Black pills show 2.7K Clicks, 38 Calls and 16 Customers, green squares with arrows carry the conversion percentages, and the strip ends on the green Pulse logo and wordmark. Typography: Bold white sans inside black pills, gray wordmark, all sliding left as one strip. On-screen text: “2.7K Clicks”, “6.5%”, “Leads”, “12%”, “38 Calls”, “21%”, “16 Customers”, “41%”, “Pulse”, “Own”. Techniques: Kinetic type. Camera: Static. Transition: cut in, cut out. Palette: #fcfefe, #699c74, #17191a.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s28.jpg",
+      "recipe": [
+        {
+          "time": "0.1s",
+          "kind": "Text",
+          "value": "“2.7K Clicks” · scale"
+        },
+        {
+          "time": "0.1s",
+          "kind": "Voice",
+          "value": "“Complete analytics by source.”"
+        },
+        {
+          "time": "0.6s",
+          "kind": "Text",
+          "value": "“6.5%” · slide"
+        },
+        {
+          "time": "1.0s",
+          "kind": "Technique",
+          "value": "Kinetic type"
+        },
+        {
+          "time": "1.1s",
+          "kind": "Text",
+          "value": "“Calls”"
+        },
+        {
+          "time": "1.1s",
+          "kind": "Text",
+          "value": "“16 Customers” · slide, linear"
+        },
+        {
+          "time": "1.4s",
+          "kind": "Text",
+          "value": "“41%” · slide, ease-out"
+        },
+        {
+          "time": "1.7s",
+          "kind": "Logo",
+          "value": "Logo appears · “Pulse”"
+        },
+        {
+          "time": "1.7s",
+          "kind": "Text",
+          "value": "“Pulse”"
+        },
+        {
+          "time": "2.4s",
+          "kind": "Sound",
+          "value": "Click"
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "number": "29",
+      "sectionId": "s9",
+      "type": "Feature reveal",
+      "kind": "Title card",
+      "duration": "1.4s",
+      "start": 40.8,
+      "end": 42.167,
+      "description": "On a plain off-white background, the phrase “Own a content” builds in dark gray sans, then “agency?” slides in from the right inside a green rounded box with white type.",
+      "cutNote": "Cut → Cut · Static · Large dark gray geometric sans, bold; the word “agency?” is white on a green rounded highlight.",
+      "techniques": [
+        "Kinetic type"
+      ],
+      "prompt": "Scene 29 of Pulse's 0:52 SaaS launch film (Feature reveal, Title card, 1.4s, 16:9, 30 fps). On a plain off-white background, the phrase “Own a content” builds in dark gray sans, then “agency?” slides in from the right inside a green rounded box with white type. Typography: Large dark gray geometric sans, bold; the word “agency?” is white on a green rounded highlight.. On-screen text: “Own a content”, “agency?”. Techniques: Kinetic type. Camera: Static. Transition: cut in, cut out. Palette: #fcfefe, #9fa0a2, #5dd387.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s29.jpg",
+      "recipe": [
+        {
+          "time": "0.0s",
+          "kind": "Text",
+          "value": "“Own a content” · slide, ease-in"
+        },
+        {
+          "time": "0.0s",
+          "kind": "Voice",
+          "value": "“Own a content agency?”"
+        },
+        {
+          "time": "0.3s",
+          "kind": "Sound",
+          "value": "Notification"
+        },
+        {
+          "time": "0.5s",
+          "kind": "Music",
+          "value": "Stop"
+        },
+        {
+          "time": "0.5s",
+          "kind": "Text",
+          "value": "“agency?” · slide, ease-in"
+        },
+        {
+          "time": "0.7s",
+          "kind": "Technique",
+          "value": "Kinetic type"
+        },
+        {
+          "time": "0.9s",
+          "kind": "Music",
+          "value": "Sweep"
+        },
+        {
+          "time": "1.0s",
+          "kind": "Sound",
+          "value": "Click"
+        },
+        {
+          "time": "1.2s",
+          "kind": "Camera",
+          "value": "Pull out · ease-in-out, 1.3s"
+        },
+        {
+          "time": "1.3s",
+          "kind": "Voice",
+          "value": "“Tracking your client's performance”"
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "number": "30",
+      "sectionId": "s9",
+      "type": "Feature reveal",
+      "kind": "UI",
+      "duration": "2.4s",
+      "start": 42.167,
+      "end": 44.533,
+      "description": "A browser-window UI demo: a cursor clicks New workspace, a modal fills in a client name, then the view switches to the client dashboard with a green gradient wash. A two-line headline slides in over it.",
+      "cutNote": "Cut → Cut · Pull out · Large bold sans headline, two lines, slides in",
+      "techniques": [
+        "Cursor demo"
+      ],
+      "prompt": "Scene 30 of Pulse's 0:52 SaaS launch film (Feature reveal, UI, 2.4s, 16:9, 30 fps). A browser-window UI demo: a cursor clicks New workspace, a modal fills in a client name, then the view switches to the client dashboard with a green gradient wash. A two-line headline slides in over it. Typography: Large bold sans headline, two lines, slides in. On-screen text: “Own a content agency?”. Techniques: Cursor demo. Camera: Pull out. Transition: cut in, cut out. Palette: #f8fbfa, #242b33, #a6c3b3.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s30.jpg",
+      "recipe": [
+        {
+          "time": "0.5s",
+          "kind": "Technique",
+          "value": "Cursor demo"
+        },
+        {
+          "time": "1.4s",
+          "kind": "Voice",
+          "value": "“has never been this easy.”"
+        },
+        {
+          "time": "1.6s",
+          "kind": "Camera",
+          "value": "Pull out · ease-in-out, 1.6s"
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "number": "31",
+      "sectionId": "s9",
+      "type": "Feature reveal",
+      "kind": "UI",
+      "duration": "0.8s",
+      "start": 44.533,
+      "end": 45.333,
+      "description": "A flat analytics dashboard fills the frame: a left nav, a dark green stat strip showing revenue, customers, calls, leads, and a green revenue line chart. A black cursor hovers over the chart while the text settles into place.",
+      "cutNote": "Cut → Cut · Pull out",
+      "techniques": [
+        "Cursor demo"
+      ],
+      "prompt": "Scene 31 of Pulse's 0:52 SaaS launch film (Feature reveal, UI, 0.8s, 16:9, 30 fps). A flat analytics dashboard fills the frame: a left nav, a dark green stat strip showing revenue, customers, calls, leads, and a green revenue line chart. A black cursor hovers over the chart while the text settles into place. Techniques: Cursor demo. Camera: Pull out. Transition: cut in, cut out. Palette: #fafcfc, #bbdbca, #1d262b.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s31.jpg",
+      "recipe": [
+        {
+          "time": "0.4s",
+          "kind": "Technique",
+          "value": "Cursor demo"
+        },
+        {
+          "time": "0.7s",
+          "kind": "Voice",
+          "value": "“And yours too.”"
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "number": "32",
+      "sectionId": "s9",
+      "type": "Feature reveal",
+      "kind": "UI",
+      "duration": "1.2s",
+      "start": 45.333,
+      "end": 46.567,
+      "description": "On a white background, the headline builds word by word on the left while two notification cards stack on the right: the email alert recedes up and shrinks as the wallet payment card settles in front of it.",
+      "cutNote": "Cut → Cut · Static · Large black sans-serif, medium weight, words appear one by one",
+      "techniques": [
+        "Kinetic type"
+      ],
+      "prompt": "Scene 32 of Pulse's 0:52 SaaS launch film (Feature reveal, UI, 1.2s, 16:9, 30 fps). On a white background, the headline builds word by word on the left while two notification cards stack on the right: the email alert recedes up and shrinks as the wallet payment card settles in front of it. Typography: Large black sans-serif, medium weight, words appear one by one. On-screen text: “And yours too.”. Techniques: Kinetic type. Camera: Static. Transition: cut in, cut out. Palette: #fcfdff, #ced3d8, #929596.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s32.jpg",
+      "recipe": [
+        {
+          "time": "0.4s",
+          "kind": "Technique",
+          "value": "Kinetic type"
+        },
+        {
+          "time": "0.5s",
+          "kind": "Logo",
+          "value": "Logo appears"
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "number": "33",
+      "sectionId": "s10",
+      "type": "Outro",
+      "kind": "Graphics",
+      "duration": "0.9s",
+      "start": 46.567,
+      "end": 47.466,
+      "description": "A glowing green circle with faint concentric rings contracts on black as a large ring sweeps outward. It settles into a small dot beside a forming P and a white cursor bar, while the gray word Intelligent fades in on the right.",
+      "cutNote": "Cut → Cut · Push in · Medium gray sans-serif, regular weight, appears on the right; the P of the wordmark is dark with a white vertical cursor bar beside it",
+      "techniques": [
+        "Morph",
+        "Kinetic type"
+      ],
+      "prompt": "Scene 33 of Pulse's 0:52 SaaS launch film (Outro, Graphics, 0.9s, 16:9, 30 fps). A glowing green circle with faint concentric rings contracts on black as a large ring sweeps outward. It settles into a small dot beside a forming P and a white cursor bar, while the gray word Intelligent fades in on the right. Typography: Medium gray sans-serif, regular weight, appears on the right; the P of the wordmark is dark with a white vertical cursor bar beside it. On-screen text: “Pulse”, “Intelligent”. Techniques: Morph, Kinetic type. Camera: Push in. Transition: cut in, cut out. Palette: #000402, #00491e, #38bc5d.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s33.jpg",
+      "recipe": [
+        {
+          "time": "0.0s",
+          "kind": "Camera",
+          "value": "Push in · ease-in, 0.5s"
+        },
+        {
+          "time": "0.2s",
+          "kind": "Voice",
+          "value": "“Pulse, intelligent tracking for content funnels.”"
+        },
+        {
+          "time": "0.5s",
+          "kind": "Technique",
+          "value": "Morph"
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "number": "34",
+      "sectionId": "s10",
+      "type": "Outro",
+      "kind": "Logo",
+      "duration": "2.4s",
+      "start": 47.466,
+      "end": 49.866,
+      "description": "The Pulse logo, a green dot and white wordmark, sits on black while a glowing green panel opens to reveal the tagline. The scene then cuts to black with the gray word Start on the left.",
+      "cutNote": "Cut → Cut · Static · White sans-serif tagline, medium weight, revealed by the green mask; larger gray sans-serif for Start",
+      "techniques": [
+        "Masking"
+      ],
+      "prompt": "Scene 34 of Pulse's 0:52 SaaS launch film (Outro, Logo, 2.4s, 16:9, 30 fps). The Pulse logo, a green dot and white wordmark, sits on black while a glowing green panel opens to reveal the tagline. The scene then cuts to black with the gray word Start on the left. Typography: White sans-serif tagline, medium weight, revealed by the green mask; larger gray sans-serif for Start. On-screen text: “Intelligent tracking for content funnels.”, “Start”. Techniques: Masking. Camera: Static. Transition: cut in, cut out. Palette: #000100, #244f30, #4ea568.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s34.jpg",
+      "recipe": [
+        {
+          "time": "0.0s",
+          "kind": "Logo",
+          "value": "Logo appears · “Pulse”"
+        },
+        {
+          "time": "0.0s",
+          "kind": "Text",
+          "value": "“Pulse”"
+        },
+        {
+          "time": "0.0s",
+          "kind": "Text",
+          "value": "“Intelligent tracking for”"
+        },
+        {
+          "time": "0.0s",
+          "kind": "Technique",
+          "value": "Kinetic type"
+        },
+        {
+          "time": "0.5s",
+          "kind": "Technique",
+          "value": "Masking"
+        },
+        {
+          "time": "0.5s",
+          "kind": "Text",
+          "value": "“content funnels.” · scale"
+        },
+        {
+          "time": "2.1s",
+          "kind": "Voice",
+          "value": "“Start your free trial today.”"
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "number": "35",
+      "sectionId": "s11",
+      "type": "CTA",
+      "kind": "Title card",
+      "duration": "2.2s",
+      "start": 49.866,
+      "end": 52.106,
+      "description": "On a black background, a centered call-to-action line assembles: 'Start your' and 'today.' in light gray, with 'Free trial.' set inside a green rounded button that scales in. The line settles, holds, then the frame fades to black.",
+      "cutNote": "Cut → Cut · Static · Large light-gray geometric sans, medium weight, with 'Free trial.' in white inside a green pill button; words settle into place.",
+      "techniques": [
+        "Kinetic type"
+      ],
+      "prompt": "Scene 35 of Pulse's 0:52 SaaS launch film (CTA, Title card, 2.2s, 16:9, 30 fps). On a black background, a centered call-to-action line assembles: 'Start your' and 'today.' in light gray, with 'Free trial.' set inside a green rounded button that scales in. The line settles, holds, then the frame fades to black. Typography: Large light-gray geometric sans, medium weight, with 'Free trial.' in white inside a green pill button; words settle into place.. On-screen text: “Start your”, “Free trial.”, “today.”. Techniques: Kinetic type. Camera: Static. Transition: cut in, cut out. Palette: #000100, #395841, #71b887.",
+      "filming": "",
+      "estimatedNeeds": "",
+      "thumb": "thumbs/s35.jpg",
+      "recipe": [
+        {
+          "time": "0.0s",
+          "kind": "Text",
+          "value": "“Start your”"
+        },
+        {
+          "time": "0.3s",
+          "kind": "Text",
+          "value": "“Free trial.”"
+        },
+        {
+          "time": "0.5s",
+          "kind": "Technique",
+          "value": "Kinetic type"
+        },
+        {
+          "time": "0.6s",
+          "kind": "Sound",
+          "value": "Click"
+        },
+        {
+          "time": "0.8s",
+          "kind": "Text",
+          "value": "“today.”"
+        },
+        {
+          "time": "1.0s",
+          "kind": "Sound",
+          "value": "Notification"
+        }
       ]
     }
   ],
-  style: {
-    colors: [
-      { hex: "#0B0B0B", name: "Background", role: "EXAMPLE field" },
-      { hex: "#F5F5F5", name: "Headline", role: "EXAMPLE type" },
-      { hex: "#FE3F56", name: "Primary", role: "EXAMPLE accent" },
-      { hex: "#3697FF", name: "Accent", role: "EXAMPLE secondary" },
-      { hex: "#2D294B", name: "Deep", role: "EXAMPLE panel" }
+  "style": {
+    "colors": [
+      {
+        "hex": "#fafcfc",
+        "name": "Off-white",
+        "role": ""
+      },
+      {
+        "hex": "#000202",
+        "name": "Black",
+        "role": ""
+      },
+      {
+        "hex": "#6bc180",
+        "name": "Green",
+        "role": ""
+      },
+      {
+        "hex": "#1eca62",
+        "name": "Bright green",
+        "role": ""
+      },
+      {
+        "hex": "#93daac",
+        "name": "Mint",
+        "role": ""
+      },
+      {
+        "hex": "#104522",
+        "name": "Deep green",
+        "role": ""
+      }
     ],
-    type: "EXAMPLE: Large white sans, regular-to-semibold weight. Headlines build word by word. UI labels stay small and sharp. No script or serif.",
-    uiTreatment: "EXAMPLE: 3D-tilted device mockups on a dark field, dashboards already populated, slow tilt and pull-out camera, rounded accent pills, no raw screen recordings.",
-    pacing: "EXAMPLE: Mid-tempo, about 5.0 s per scene (this sample is 8 scenes in 40 s). Title cards are shorter than UI demos. Hold the CTA about 4 seconds."
+    "type": "Sans-serif for headlines and body. Headlines build word by word (kinetic type in 23 of 35 scenes), with key words set in green rounded pills.",
+    "uiTreatment": "The video alternates kinetic type cards on black and off-white with 3D-tilted dashboard mockups, announcing each feature word by word before demoing it in the interface. Signature moves are the green pill highlights, the pulsing green dot, and slow tilt and scroll camera passes over the UI at a steady mid-tempo pace.",
+    "pacing": "Pace 6.9 · 35 scenes at about 1.5 s each · steady mid-tempo electronic beat at 112 BPM · tone: premium · background: gradient."
   },
-  sound: {
-    voiceover: {
-      present: true,
-      notes: "EXAMPLE: Single narrator, calm mid-tempo, dry, sitting just over the music. Not a real transcript.",
-      lines: [
-        { time: "0:00", seconds: 0, text: "EXAMPLE — “you already have the data, you just cannot see it”" },
-        { time: "0:15", seconds: 15, text: "EXAMPLE — “see which channel actually closed the deal”" },
-        { time: "0:36", seconds: 36, text: "EXAMPLE — “start your free trial today”" }
+  "sound": {
+    "voiceover": {
+      "present": true,
+      "notes": "Female narrator speaking clearly and energetically about tracking content conversions and leads. Single narrator, English, 173 wpm, 137 words, about 43 s voiced; music sits 12.4 dB under the voice.",
+      "lines": [
+        {
+          "time": "0:00",
+          "seconds": 0.0,
+          "text": "you just got 22 warm leads from your organic content but which video actually sent them this"
+        },
+        {
+          "time": "0:06",
+          "seconds": 6.32,
+          "text": "one or this one meet pulse it lets you track conversions from your organic content from first"
+        },
+        {
+          "time": "0:14",
+          "seconds": 14.2,
+          "text": "touch to conversion everything is in pulse just drag your content sources in and that's it you're"
+        },
+        {
+          "time": "0:20",
+          "seconds": 20.28,
+          "text": "ready to go stop making content for views double down on the content that actually made you money"
+        },
+        {
+          "time": "0:26",
+          "seconds": 26.22,
+          "text": "and know which platform makes you the most."
+        },
+        {
+          "time": "0:28",
+          "seconds": 28.66,
+          "text": "Track your leads."
+        },
+        {
+          "time": "0:29",
+          "seconds": 29.98,
+          "text": "Someone booked a call with you?"
+        },
+        {
+          "time": "0:31",
+          "seconds": 31.46,
+          "text": "Don't walk into that call without knowing your prospect."
+        },
+        {
+          "time": "0:34",
+          "seconds": 34.34,
+          "text": "See every single step they took"
+        },
+        {
+          "time": "0:36",
+          "seconds": 36.36,
+          "text": "before deciding to reach out."
+        },
+        {
+          "time": "0:38",
+          "seconds": 38.44,
+          "text": "Complete analytics by source."
+        },
+        {
+          "time": "0:40",
+          "seconds": 40.8,
+          "text": "Own a content agency?"
+        },
+        {
+          "time": "0:42",
+          "seconds": 42.12,
+          "text": "Tracking your client's performance"
+        },
+        {
+          "time": "0:43",
+          "seconds": 43.58,
+          "text": "has never been this easy."
+        },
+        {
+          "time": "0:45",
+          "seconds": 45.24,
+          "text": "And yours too."
+        },
+        {
+          "time": "0:46",
+          "seconds": 46.72,
+          "text": "Pulse, intelligent tracking for content funnels."
+        },
+        {
+          "time": "0:49",
+          "seconds": 49.54,
+          "text": "Start your free trial today."
+        }
       ]
     },
-    music: {
-      title: "EXAMPLE bed track (placeholder, not a licensed cue)",
-      notes: "EXAMPLE: ~110 BPM, soft pulse, rises slightly into the CTA, then tails out.",
-      cues: [
-        { time: "0:00", seconds: 0, text: "Bed starts, low" },
-        { time: "0:15", seconds: 15, text: "Slight lift under the first feature" },
-        { time: "0:36", seconds: 36, text: "Short rise, then tail out" }
+    "music": {
+      "title": "Upbeat electronic · 112 BPM",
+      "notes": "Mood: Energetic, professional, confident. Instruments: synth, bass, drums. Loudness -15.9 LUFS.",
+      "cues": [
+        {
+          "time": "0:00",
+          "seconds": 0.0,
+          "text": "Full mix (drums, bass, other) · energy 0.7"
+        },
+        {
+          "time": "0:08",
+          "seconds": 8.9,
+          "text": "Music sweep"
+        },
+        {
+          "time": "0:27",
+          "seconds": 27.0,
+          "text": "Drums + melody (drums, other) · energy 0.55"
+        },
+        {
+          "time": "0:41",
+          "seconds": 41.3,
+          "text": "Music stop"
+        },
+        {
+          "time": "0:41",
+          "seconds": 41.7,
+          "text": "Music sweep"
+        },
+        {
+          "time": "0:42",
+          "seconds": 42.2,
+          "text": "Full mix (drums, bass, other) · energy 0.64"
+        }
       ]
     },
-    sfx: [
-      { time: "0:01.4", seconds: 1.4, name: "EXAMPLE Click — badge snap" },
-      { time: "0:05.1", seconds: 5.1, name: "EXAMPLE Soft pop — notification chip" },
-      { time: "0:21.0", seconds: 21.0, name: "EXAMPLE Click — cursor on filter" },
-      { time: "0:36.6", seconds: 36.6, name: "EXAMPLE Soft whoosh — CTA button" }
+    "sfx": [
+      {
+        "time": "0:01.3",
+        "seconds": 1.253,
+        "name": "Click — a short user interface click sound"
+      },
+      {
+        "time": "0:01.8",
+        "seconds": 1.787,
+        "name": "Click — a short user interface click sound"
+      },
+      {
+        "time": "0:06.8",
+        "seconds": 6.757,
+        "name": "Keyboard typing — keyboard typing sounds"
+      },
+      {
+        "time": "0:09.0",
+        "seconds": 8.986,
+        "name": "Whoosh — a fast whoosh swoosh transition sound effect"
+      },
+      {
+        "time": "0:24.4",
+        "seconds": 24.45,
+        "name": "Click — a short user interface click sound"
+      },
+      {
+        "time": "0:25.4",
+        "seconds": 25.379,
+        "name": "Click — a short user interface click sound"
+      },
+      {
+        "time": "0:26.7",
+        "seconds": 26.702,
+        "name": "Click — a short user interface click sound"
+      },
+      {
+        "time": "0:28.6",
+        "seconds": 28.606,
+        "name": "Click — a short user interface click sound"
+      },
+      {
+        "time": "0:40.8",
+        "seconds": 40.774,
+        "name": "Click — a short user interface click sound"
+      },
+      {
+        "time": "0:41.1",
+        "seconds": 41.076,
+        "name": "Notification — a short notification chime ding"
+      },
+      {
+        "time": "0:41.8",
+        "seconds": 41.795,
+        "name": "Click — a short user interface click sound"
+      },
+      {
+        "time": "0:50.5",
+        "seconds": 50.456,
+        "name": "Click — a short user interface click sound"
+      },
+      {
+        "time": "0:50.8",
+        "seconds": 50.828,
+        "name": "Notification — a short notification chime ding"
+      }
     ]
   }
 };
@@ -990,7 +2603,7 @@ function renderHeader() {
     <div class="header-main">
       <h1>${esc(d.title)}</h1>
       <p class="meta">
-        <a class="brand-link" href="#">${esc(d.brand)}</a>
+        <a class="brand-link" href="${esc(d.brandUrl || "#")}" target="_blank" rel="noopener">${esc(d.brand)}</a>
         <button type="button" class="follow-btn" id="follow-btn" title="Follow ${esc(d.brand)}">${icons.bell} Follow</button>
         <span class="dot-sep">·</span>${esc(d.date)}
         <span class="dot-sep">·</span><span class="tabular">${esc(d.length)}</span>
@@ -1008,6 +2621,7 @@ function renderHeader() {
         <div class="stat"><dt>Features shown</dt><dd class="tabular">${esc(d.stats.featuresShown)}</dd></div>
         <div class="stat"><dt>Call to action</dt><dd class="tabular">${esc(d.stats.callToAction)}</dd></div>
         <div class="stat"><dt>Voiceover</dt><dd class="tabular">${esc(d.stats.voiceover)}</dd></div>
+        ${d.stats.views ? `<div class="stat"><dt>Views</dt><dd class="tabular">${esc(d.stats.views)}</dd></div>` : ""}
       </dl>
     </div>
     <div class="header-actions">
@@ -1026,12 +2640,14 @@ function renderLeft() {
     : "";
   document.getElementById("left").innerHTML = `
     <div class="player-wrap">
-      <video id="player" ${src ? `src="${esc(src)}"` : ""} ${poster} controls playsinline preload="metadata"></video>
+      ${d.video && d.video.youtubeId ? `<div id="player"></div>
+      <img class="yt-poster" id="yt-poster" src="${esc(d.video.poster || "")}" alt="" />
+      <button type="button" class="yt-poster-btn" id="yt-poster-btn" aria-label="Play video"><span class="play-orb">${icons.play}</span></button>` : `<video id="player" ${src ? `src="${esc(src)}"` : ""} ${poster} controls playsinline preload="metadata"></video>
       <div class="player-placeholder${src ? "" : ""}" id="ph">
         <div class="play-orb">${icons.play}</div>
-        <div class="ph-title">${src ? esc(d.title) : "EXAMPLE — no video src set"}</div>
+        <div class="ph-title">${src ? esc(d.title) : "No video set"}</div>
         <div class="ph-sub">${src ? "Click to play" : "Set DATA.video.src to a relative path next to this file"}</div>
-      </div>
+      </div>`}
     </div>
     <div class="timecode"><span class="now" id="tc-now">00:00:00</span><span class="dur" id="tc-dur"> / ${fmtTime(d.lengthSeconds)}</span></div>
     <p class="overview">${d.overview || ""}</p>
@@ -1056,7 +2672,7 @@ function sceneCard(sc, openRecipe) {
           <span class="scene-kind">${esc(sc.kind)}</span>
           <span class="scene-dur tabular">${esc(sc.duration)}</span>
         </div>
-        <p class="scene-desc">${esc(sc.description)}</p>
+        ${sc.thumb ? `<div class="scene-media"><img class="scene-thumb" src="${esc(sc.thumb)}" alt="Scene ${esc(sc.number)} frame" loading="lazy" data-goto="${sc.id}" /><p class="scene-desc">${esc(sc.description)}</p></div>` : `<p class="scene-desc">${esc(sc.description)}</p>`}
         ${sc.cutNote ? `<p class="scene-cut">${esc(sc.cutNote)}</p>` : ""}
         <div class="scene-body">
           <div class="chips">${chips}</div>
@@ -1199,7 +2815,57 @@ function renderRight() {
   `;
 }
 
+const YT_STATE = { player: null, ready: false, pending: null, timer: null };
+function ytStart(seconds) {
+  const poster = document.getElementById("yt-poster");
+  const btn = document.getElementById("yt-poster-btn");
+  if (poster) poster.remove();
+  if (btn) btn.remove();
+  if (YT_STATE.player) {
+    if (YT_STATE.ready) { YT_STATE.player.seekTo(seconds, true); YT_STATE.player.playVideo(); }
+    else YT_STATE.pending = seconds;
+    return;
+  }
+  YT_STATE.pending = seconds;
+  const make = () => {
+    YT_STATE.player = new YT.Player("player", {
+      videoId: DATA.video.youtubeId,
+      playerVars: { autoplay: 1, playsinline: 1, rel: 0, modestbranding: 1, start: Math.floor(seconds) },
+      events: {
+        onReady: (e) => {
+          YT_STATE.ready = true;
+          if (YT_STATE.pending != null) e.target.seekTo(YT_STATE.pending, true);
+          e.target.playVideo();
+          YT_STATE.pending = null;
+          clearInterval(YT_STATE.timer);
+          YT_STATE.timer = setInterval(() => {
+            const p = YT_STATE.player;
+            if (!p || !p.getCurrentTime) return;
+            const t = p.getCurrentTime() || 0;
+            document.getElementById("tc-now").textContent = fmtTime(t);
+            highlightAt(t);
+          }, 250);
+        }
+      }
+    });
+  };
+  if (window.YT && window.YT.Player) make();
+  else {
+    window.onYouTubeIframeAPIReady = make;
+    const s = document.createElement("script");
+    s.src = "https://www.youtube.com/iframe_api";
+    document.head.appendChild(s);
+  }
+}
 function seekTo(seconds, play) {
+  if (DATA.video && DATA.video.youtubeId) {
+    const t0 = Math.max(0, Number(seconds) || 0);
+    highlightAt(t0);
+    document.getElementById("tc-now").textContent = fmtTime(t0);
+    if (play) ytStart(t0);
+    else if (YT_STATE.ready) YT_STATE.player.seekTo(t0, true);
+    return;
+  }
   const v = document.getElementById("player");
   if (!v) return;
   const t = Math.max(0, Number(seconds) || 0);
@@ -1251,7 +2917,8 @@ function bind() {
   const tcNow = document.getElementById("tc-now");
   const tcDur = document.getElementById("tc-dur");
 
-  if (v) {
+  document.getElementById("yt-poster-btn")?.addEventListener("click", () => ytStart(0));
+  if (v && v.tagName === "VIDEO") {
     const hidePh = () => { if (DATA.video && DATA.video.src) ph.classList.add("hide"); };
     v.addEventListener("play", hidePh);
     v.addEventListener("playing", hidePh);
@@ -1280,11 +2947,11 @@ function bind() {
   });
   document.getElementById("save-btn")?.addEventListener("click", (e) => {
     e.currentTarget.classList.toggle("is-saved");
-    toast("EXAMPLE — Save is a visual control in this template.");
+    toast(e.currentTarget.classList.contains("is-saved") ? "Saved" : "Removed from saved");
   });
   document.getElementById("copy-link")?.addEventListener("click", async () => {
     try {
-      await navigator.clipboard.writeText(location.href);
+      await navigator.clipboard.writeText((DATA.video && DATA.video.sourceUrl) || location.href);
       toast("Link copied");
     } catch {
       toast("Could not copy link");
