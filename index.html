@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #1a1a1a;
+      --panel: #262626;
+      --panel-hover: #2e2e2e;
+      --active: #3a3a3a;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.14);
+      --text: #f5f5f5;
+      --text-2: #d6d6d6;
+      --text-3: #a3a3a3;
+      --text-4: #737373;
+      --chip: #333333;
+      --chip-hover: #3d3d3d;
+      --btn: #2c2c2c;
+      --save-bg: #f5f5f5;
+      --save-fg: #171717;
+      --ring: rgba(255, 255, 255, 0.12);
+      --role-hook: #1baf7a;
+      --role-problem: #eb6834;
+      --role-product_intro: #256abf;
+      --role-feature_reveal: #eda100;
+      --role-demo: #e87ba4;
+      --role-social_proof: #008300;
+      --role-pricing: #4a3aa7;
+      --role-cta: #e34948;
+      --role-outro: #4d525a;
+      --role-other: #a3a8b0;
+      --font: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+      --mono: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background: var(--bg); color: var(--text); font-family: var(--font); }
+    body { min-height: 100vh; -webkit-font-smoothing: antialiased; }
+    button, input { font-family: inherit; }
+    button { cursor: pointer; border: 0; background: none; color: inherit; }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .tabular { font-variant-numeric: tabular-nums; }
+
+    .page {
+      max-width: 1720px;
+      margin: 0 auto;
+      padding: 28px 48px 96px;
+    }
+    @media (max-width: 900px) {
+      .page { padding: 16px 16px 64px; }
+    }
+
+    /* ===== Header ===== */
+    .header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: 16px 16px;
+      margin-bottom: 28px;
+    }
+    .brand-mark {
+      position: relative;
+      flex: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      margin-top: 4px;
+      overflow: hidden;
+      background: #2a2a2a;
+      display: grid;
+      place-items: center;
+      font-weight: 600;
+      font-size: 22px;
+      color: var(--text);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.10);
+    }
+    .brand-mark img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .header-main { min-width: 0; flex: 1; }
+    h1 {
+      font-size: 28px;
+      line-height: 1.2;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+    .meta {
+      margin-top: 6px;
+      font-size: 14px;
+      color: var(--text-3);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0;
+    }
+    .meta a.brand-link { font-weight: 500; color: var(--text-2); }
+    .meta a.brand-link:hover { color: var(--text); text-decoration: underline; }
+    .dot-sep { margin: 0 0.45em; color: var(--text-4); }
+    .follow-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 28px;
+      padding: 0 8px;
+      margin: 0 2px 0 8px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-2);
+      background: transparent;
+      box-shadow: inset 0 0 0 1px var(--ring);
+      vertical-align: middle;
+    }
+    .follow-btn:hover { background: var(--panel-hover); }
+    .follow-btn svg { width: 14px; height: 14px; }
+    .follow-btn.is-on { background: var(--panel); color: var(--text); }
+    .ai-flag {
+      color: var(--text-4);
+      text-decoration: underline dotted;
+      text-underline-offset: 3px;
+      cursor: help;
+    }
+    .made {
+      margin-top: 2px;
+      font-size: 14px;
+      color: var(--text-3);
+    }
+    .made .q { color: var(--text-4); }
+    .made .who { font-weight: 500; color: var(--text-2); }
+
+    .stats {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 20px;
+      font-size: 12px;
+    }
+    .stats dt { color: var(--text-4); }
+    .stats dd { font-weight: 500; color: var(--text-2); }
+    .stat { display: flex; align-items: baseline; gap: 6px; }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex: none;
+    }
+    .icon-btn {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      color: var(--text-4);
+    }
+    .icon-btn:hover { background: var(--panel-hover); color: var(--text-3); }
+    .icon-btn svg { width: 20px; height: 20px; }
+    .save-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 36px;
+      padding: 0 12px;
+      border-radius: 8px;
+      background: var(--save-bg);
+      color: var(--save-fg);
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.25);
+    }
+    .save-btn:hover { filter: brightness(0.95); }
+    .save-btn svg { width: 16px; height: 16px; opacity: 0.7; }
+    .save-btn.is-saved { background: #e5e5e5; }
+
+    /* ===== Layout ===== */
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) clamp(340px, 28vw, 400px);
+      gap: 32px;
+      align-items: start;
+    }
+    @media (max-width: 980px) {
+      .layout { grid-template-columns: 1fr; }
+      .right { position: relative; top: auto; height: auto; max-height: none; }
+    }
+
+    /* ===== Video ===== */
+    .player-wrap {
+      position: relative;
+      background: #0d0d0d;
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+    }
+    .player-wrap video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      background: #000;
+      object-fit: contain;
+    }
+    .player-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: var(--text-4);
+      background:
+        radial-gradient(80% 70% at 50% 40%, #2a2a2a 0%, #141414 70%);
+      pointer-events: none;
+    }
+    .player-placeholder.hide { display: none; }
+    .player-placeholder .play-orb {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      display: grid;
+      place-items: center;
+      color: var(--text-2);
+    }
+    .player-placeholder .play-orb svg { width: 28px; height: 28px; margin-left: 3px; }
+    .player-placeholder .ph-title { font-size: 14px; font-weight: 500; color: var(--text-3); }
+    .player-placeholder .ph-sub { font-size: 12px; color: var(--text-4); }
+
+    .timecode {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      font-family: var(--mono);
+      font-size: 13px;
+    }
+    .timecode .now { color: var(--text); }
+    .timecode .dur { color: var(--text-4); }
+
+    .overview {
+      margin-top: 24px;
+      max-width: 68ch;
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--text-3);
+    }
+    .overview strong { font-weight: 500; color: var(--text-2); }
+
+    .footage {
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: 12px;
+      background: var(--panel);
+    }
+    .footage .k { font-size: 12px; font-weight: 500; color: var(--text-2); }
+    .footage .v { margin-top: 2px; font-size: 12px; color: var(--text-3); }
+
+    /* ===== Right panel ===== */
+    .right {
+      position: sticky;
+      top: 16px;
+      height: calc(100vh - 32px);
+      min-height: 480px;
+      background: var(--panel);
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+    }
+    .tabs {
+      display: flex;
+      gap: 16px;
+      padding: 14px 16px 0;
+      border-bottom: 1px solid var(--border);
+      flex: none;
+    }
+    .tab {
+      position: relative;
+      padding: 0 2px 10px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-4);
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+    }
+    .tab:hover { color: var(--text-3); }
+    .tab.active { color: var(--text); border-bottom-color: var(--text); }
+
+    .tab-panel {
+      display: none;
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      padding: 8px;
+    }
+    .tab-panel.active { display: block; }
+
+    /* ===== Sections / scenes ===== */
+    .sec-list, .scene-list { list-style: none; display: grid; gap: 2px; }
+    .sec-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      text-align: left;
+      padding: 8px 12px;
+      border-radius: 12px;
+      color: var(--text);
+    }
+    .sec-head:hover { background: var(--panel-hover); }
+    .sec-head .name {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .sec-head .type { flex: none; font-size: 12px; color: var(--text-4); }
+    .sec-head .meta-r {
+      margin-left: auto;
+      flex: none;
+      font-size: 12px;
+      color: var(--text-4);
+    }
+    .sec-head .chev {
+      width: 16px; height: 16px;
+      flex: none;
+      color: var(--text-4);
+      transition: transform 150ms ease;
+    }
+    .sec-head.open .chev { transform: rotate(180deg); }
+    .scene-list { padding-left: 8px; }
+    .scene-list.hidden { display: none; }
+
+    .role-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex: none;
+      background: var(--c, var(--role-other));
+    }
+
+    .scene {
+      border-radius: 12px;
+      padding: 12px;
+      cursor: pointer;
+      transition: background 100ms ease;
+    }
+    .scene:hover { background: var(--panel-hover); }
+    .scene.current { background: var(--active); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06); }
+    .scene-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .scene-num {
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text);
+      background: none;
+      padding: 0;
+    }
+    .scene-role {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .scene-kind { font-size: 12px; color: var(--text-4); }
+    .scene-dur { margin-left: auto; font-size: 12px; color: var(--text-4); }
+
+    .scene-desc {
+      margin-top: 4px;
+      padding-left: 26px;
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--text-2);
+    }
+    .scene-cut {
+      margin-top: 8px;
+      padding-left: 26px;
+      font-size: 12px;
+      color: var(--text-4);
+    }
+    .scene-body { padding-left: 26px; }
+
+    .chips {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      height: 24px;
+      padding: 0 8px;
+      border-radius: 6px;
+      background: var(--chip);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-2);
+      white-space: nowrap;
+    }
+
+    .prompt-block {
+      margin-top: 6px;
+      display: grid;
+      gap: 6px;
+      max-width: 100%;
+      justify-items: start;
+    }
+    .ghost-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      align-self: start;
+      width: max-content;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-2);
+      background: #1f1f1f;
+      box-shadow: inset 0 0 0 1px var(--ring);
+    }
+    .ghost-btn:hover { background: #2a2a2a; color: var(--text); }
+    .ghost-btn.copied { color: #1baf7a; }
+    .filming .fk { font-size: 12px; font-weight: 500; color: var(--text-2); }
+    .filming .fv { margin-top: 2px; font-size: 12px; color: var(--text-3); }
+
+    .recipe-row {
+      margin-top: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+    .recipe-list {
+      display: none;
+      margin-top: 12px;
+      padding-left: 12px;
+      border-left: 1px solid var(--border-strong);
+      list-style: none;
+      gap: 4px;
+    }
+    .recipe-list.open { display: grid; }
+    .recipe-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      min-width: 0;
+      font-size: 12px;
+    }
+    .recipe-item .t {
+      flex: none;
+      font-family: var(--mono);
+      color: var(--text-4);
+      background: none;
+      padding: 0;
+    }
+    .recipe-item .t:hover { color: var(--text); }
+    .recipe-item .k { flex: none; font-weight: 500; color: var(--text-3); }
+    .recipe-item .v { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-2); }
+
+    /* ===== Structure ===== */
+    .struct { padding: 8px 8px 16px; }
+    .timeline-wrap { margin: 8px 8px 20px; }
+    .timeline-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-4);
+      margin-bottom: 8px;
+    }
+    .timeline {
+      display: flex;
+      height: 28px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #1a1a1a;
+      gap: 2px;
+    }
+    .tl-block {
+      height: 100%;
+      min-width: 3px;
+      background: var(--c, var(--role-other));
+      position: relative;
+    }
+    .tl-block:hover { filter: brightness(1.15); }
+    .tl-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--text-3);
+    }
+    .tl-legend span { display: inline-flex; align-items: center; gap: 6px; }
+
+    .struct-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .struct-table td {
+      padding: 10px 10px 10px 8px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-2);
+      vertical-align: top;
+    }
+    .struct-table tr { cursor: pointer; }
+    .struct-table tr:hover td { background: var(--panel-hover); }
+    .struct-table .idx {
+      width: 22px;
+      color: var(--text-4);
+      font-variant-numeric: tabular-nums;
+      padding-right: 0;
+    }
+    .struct-table .sec-name {
+      font-weight: 600;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .struct-table .sec-sub {
+      margin-top: 3px;
+      font-size: 12px;
+      color: var(--text-4);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ===== Style ===== */
+    .style-pad, .sound-pad { padding: 12px 12px 20px; }
+    .block-title {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-4);
+      margin: 4px 0 10px;
+    }
+    .swatches {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+    .swatch { width: 86px; }
+    .swatch .chip-color {
+      width: 100%;
+      height: 48px;
+      border-radius: 10px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12);
+    }
+    .swatch .hex {
+      margin-top: 6px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-2);
+    }
+    .swatch .lab { font-size: 11px; color: var(--text-4); }
+    .style-row { margin-bottom: 16px; }
+    .style-row h3 { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .style-row p { font-size: 13px; line-height: 1.55; color: var(--text-3); }
+
+    /* ===== Sound ===== */
+    .sound-sec { margin-bottom: 22px; }
+    .sound-sec h3 { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .sound-sec .notes { font-size: 13px; color: var(--text-3); margin-bottom: 8px; line-height: 1.5; }
+    .sfx-list, .vo-list { list-style: none; display: grid; gap: 4px; }
+    .sfx-item, .vo-item {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      font-size: 13px;
+      padding: 6px 8px;
+      border-radius: 8px;
+    }
+    .sfx-item:hover, .vo-item:hover { background: var(--panel-hover); }
+    .sfx-item .t, .vo-item .t {
+      flex: none;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-4);
+      background: none;
+    }
+    .sfx-item .t:hover, .vo-item .t:hover { color: var(--text); }
+    .sfx-item .n, .vo-item .n { color: var(--text-2); }
+
+    /* toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(12px);
+      background: #111;
+      color: var(--text);
+      border: 1px solid var(--border-strong);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 160ms ease, transform 160ms ease;
+      z-index: 50;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    .empty-hint {
+      padding: 24px 12px;
+      font-size: 13px;
+      color: var(--text-4);
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="header" id="header"></header>
+    <div class="layout">
+      <section class="left" id="left"></section>
+      <aside class="right" id="right"></aside>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+/* =============================================================================
+   DATA SCHEMA — Claude: fill ONLY this object. Leave the rest of the file
+   unchanged. video.src should be a relative path to the video file sitting
+   next to this HTML (e.g. "MyFilm.mp4").
+
+   DATA = {
+     title: string,                  // page + H1, format "<Title> | <Brand>"
+     brand: string,
+     brandLogo: string,              // optional image URL; "" uses initial
+     date: string,                   // e.g. "Nov 2026"
+     length: string,                 // display, e.g. "0:40"
+     lengthSeconds: number,          // used for timeline + timecode
+     aiAnnotated: boolean,
+     madeTeam: string,               // "made Team: …"
+     studio: string,                 // "studio …"
+     stats: {
+       length: string,
+       scenes: string,               // e.g. "8 · 5.0 s avg"
+       productOnScreen: string,      // e.g. "0:08"
+       featuresShown: string,        // e.g. "3"
+       callToAction: string,         // e.g. "0:36 · 90%"
+       voiceover: string             // e.g. "Yes"
+     },
+     video: { src: string, poster: string },
+     overview: string,               // paragraph under the player; wrap the
+                                     // lead sentence in <strong>…</strong>
+     footageNeeded: string,          // "Estimated needs: …" or ""
+     sections: [
+       {
+         id: string,
+         name: string,
+         type: string,               // Hook | Problem | Product intro |
+                                     // Feature reveal | Demo | Social proof |
+                                     // Pricing | CTA | Outro | Other
+         scenesCount: number,
+         duration: string,           // e.g. "7.0s"
+         start: number,              // seconds
+         end: number
+       }
+     ],
+     scenes: [
+       {
+         id: number,                 // 1-based
+         number: string,             // "01"
+         sectionId: string,
+         type: string,               // same role vocabulary as sections[].type
+         kind: string,               // Title card | UI | Live action | …
+         duration: string,           // e.g. "3.2s"
+         start: number,              // seconds; click seeks here
+         end: number,
+         description: string,
+         cutNote: string,            // "Cut → Cut · Static · …"
+         techniques: string[],
+         prompt: string,             // copied by "Copy prompt"
+         filming: string,            // e.g. "No filming indicated"
+         estimatedNeeds: string,
+         recipe: [ { time: string, kind: string, value: string } ]
+       }
+     ],
+     style: {
+       colors: [ { hex: string, name: string, role: string } ],
+       type: string,
+       uiTreatment: string,
+       pacing: string
+     },
+     sound: {
+       voiceover: {
+         present: boolean,
+         notes: string,
+         lines: [ { time: string, seconds: number, text: string } ]
+       },
+       music: {
+         title: string,
+         notes: string,
+         cues: [ { time: string, seconds: number, text: string } ]
+       },
+       sfx: [ { time: string, seconds: number, name: string } ]
+     }
+   }
+   ========================================================================== */
+
+const DATA = {
+  title: "Example Brand Launch Film | Example Brand",
+  brand: "Example Brand",
+  brandLogo: "",
+  date: "Nov 2026",
+  length: "0:40",
+  lengthSeconds: 40,
+  aiAnnotated: true,
+  madeTeam: "Example Team",
+  studio: "Example Studio",
+  stats: {
+    length: "0:40",
+    scenes: "8 · 5.0 s avg",
+    productOnScreen: "0:08",
+    featuresShown: "3",
+    callToAction: "0:36 · 90%",
+    voiceover: "Yes"
+  },
+  video: {
+    src: "",
+    poster: ""
+  },
+  overview: "<strong>EXAMPLE — This is placeholder copy, not a real film breakdown.</strong> A 0:40 sample launch film in 8 scenes (about 5.0 s each). The product appears at 0:08, three features are shown, and a call to action lands at 0:36 (90% in), over a voiceover. Replace every field in DATA before publishing.",
+  footageNeeded: "EXAMPLE estimated needs: 3 capture groups — your screens or recordings · 1 official logo — reused across the film · 1 graphic passage — draw or supply · 1 3D passage — build or supply",
+  sections: [
+    { id: "s1", name: "The opening question", type: "Hook", scenesCount: 2, duration: "7.0s", start: 0, end: 7 },
+    { id: "s2", name: "Meet the product", type: "Product intro", scenesCount: 2, duration: "8.0s", start: 7, end: 15 },
+    { id: "s3", name: "What it can do", type: "Feature reveal", scenesCount: 3, duration: "21.0s", start: 15, end: 36 },
+    { id: "s4", name: "Start today", type: "CTA", scenesCount: 1, duration: "4.0s", start: 36, end: 40 }
+  ],
+  scenes: [
+    {
+      id: 1, number: "01", sectionId: "s1", type: "Hook", kind: "Title card",
+      duration: "3.5s", start: 0, end: 3.5,
+      description: "EXAMPLE: White headline builds word by word on black, then a colored badge snaps in and the line collapses into a rounded app icon.",
+      cutNote: "Cut → Cut · Static · Large white sans, regular weight; words slide in sequentially",
+      techniques: ["Kinetic type", "Morph"],
+      prompt: "EXAMPLE PROMPT — not a real recut brief. Black frame, large white sans headline building word by word, then a rounded badge morphs into an app icon. Mid-tempo, no logo yet.",
+      filming: "No filming indicated",
+      estimatedNeeds: "EXAMPLE: Your copy and visual identity; audio optional",
+      recipe: [
+        { time: "0.0s", kind: "Voice", value: "EXAMPLE — “you already have the data, you just cannot see it”" },
+        { time: "0.3s", kind: "Text", value: "“You already have” · slide, linear" },
+        { time: "1.2s", kind: "Text", value: "“the data”" },
+        { time: "1.4s", kind: "Sound", value: "Click" },
+        { time: "2.4s", kind: "Technique", value: "Morph" }
+      ]
+    },
+    {
+      id: 2, number: "02", sectionId: "s1", type: "Hook", kind: "Live action",
+      duration: "3.5s", start: 3.5, end: 7,
+      description: "EXAMPLE: A person at a laptop sits inside a rounded card while notification chips pop in around the frame.",
+      cutNote: "Cut → Cut · Slow push in · Soft practical light, cards scale in",
+      techniques: ["Live action card", "Kinetic type"],
+      prompt: "EXAMPLE PROMPT — framed live-action card of someone at a laptop, notification chips popping in around them, headline assembling letter by letter.",
+      filming: "Filming indicated",
+      estimatedNeeds: "EXAMPLE: 1 filmed passage — shoot, supply or replace",
+      recipe: [
+        { time: "0.0s", kind: "Text", value: "Headline assembles across the top" },
+        { time: "0.8s", kind: "UI", value: "First notification chip pops in" },
+        { time: "1.6s", kind: "Sound", value: "Soft pop" }
+      ]
+    },
+    {
+      id: 3, number: "03", sectionId: "s2", type: "Product intro", kind: "Logo",
+      duration: "3.0s", start: 7, end: 10,
+      description: "EXAMPLE: A small mark holds, then the wordmark draws on as a tagline fades in beside it.",
+      cutNote: "Dissolve · Static · Mark settles, wordmark draws left to right",
+      techniques: ["Morph", "Kinetic type"],
+      prompt: "EXAMPLE PROMPT — logo mark holds on a dark field, wordmark draws on, short tagline fades in. No product UI yet.",
+      filming: "No filming indicated",
+      estimatedNeeds: "EXAMPLE: 1 official logo — reused across the film",
+      recipe: [
+        { time: "0.0s", kind: "Technique", value: "Morph" },
+        { time: "1.2s", kind: "Text", value: "Wordmark" },
+        { time: "2.0s", kind: "Text", value: "Tagline fades in" }
+      ]
+    },
+    {
+      id: 4, number: "04", sectionId: "s2", type: "Product intro", kind: "UI",
+      duration: "5.0s", start: 10, end: 15,
+      description: "EXAMPLE: A laptop mockup scales into frame and the dashboard UI tilts gently as the first screen settles.",
+      cutNote: "Cut → Cut · Slow tilt · 3D device, UI sharp",
+      techniques: ["3D mockup", "UI tilt"],
+      prompt: "EXAMPLE PROMPT — laptop mockup scales in on a dark field, dashboard already populated, slow tilt, no cursor yet.",
+      filming: "No filming indicated",
+      estimatedNeeds: "EXAMPLE: 1 capture group — your screens or recordings · 1 3D passage",
+      recipe: [
+        { time: "0.0s", kind: "UI", value: "Laptop scales in" },
+        { time: "1.5s", kind: "Camera", value: "Slow tilt begins" },
+        { time: "3.0s", kind: "Text", value: "Product name labels the screen" }
+      ]
+    },
+    {
+      id: 5, number: "05", sectionId: "s3", type: "Feature reveal", kind: "Title card",
+      duration: "4.0s", start: 15, end: 19,
+      description: "EXAMPLE: Feature name types on, one word at a time, then a short supporting line fades under it.",
+      cutNote: "Cut → Cut · Static · Word-by-word type-on",
+      techniques: ["Kinetic type"],
+      prompt: "EXAMPLE PROMPT — black card, feature name types on word by word, supporting line fades in underneath. Hold, then cut.",
+      filming: "No filming indicated",
+      estimatedNeeds: "EXAMPLE: Your copy and visual identity",
+      recipe: [
+        { time: "0.0s", kind: "Voice", value: "EXAMPLE — “see which channel actually closed the deal”" },
+        { time: "0.2s", kind: "Text", value: "Feature name types on" },
+        { time: "2.2s", kind: "Text", value: "Supporting line" }
+      ]
+    },
+    {
+      id: 6, number: "06", sectionId: "s3", type: "Feature reveal", kind: "UI",
+      duration: "9.0s", start: 19, end: 28,
+      description: "EXAMPLE: Cursor clicks a filter; a chart animates and a detail panel slides in from the right.",
+      cutNote: "Cut → Cut · Slow scroll · Cursor demo over a tilted dashboard",
+      techniques: ["Cursor demo", "UI zoom"],
+      prompt: "EXAMPLE PROMPT — tilted dashboard, cursor clicks a filter, chart animates, a detail panel slides in from the right. Mid-tempo, keep labels readable.",
+      filming: "No filming indicated",
+      estimatedNeeds: "EXAMPLE: 1 capture group — your screens or recordings",
+      recipe: [
+        { time: "0.0s", kind: "Camera", value: "Hold on tilted dashboard" },
+        { time: "1.2s", kind: "UI", value: "Cursor clicks filter" },
+        { time: "2.0s", kind: "Sound", value: "Click" },
+        { time: "3.5s", kind: "UI", value: "Chart animates" },
+        { time: "6.0s", kind: "UI", value: "Detail panel slides in" }
+      ]
+    },
+    {
+      id: 7, number: "07", sectionId: "s3", type: "Feature reveal", kind: "UI",
+      duration: "8.0s", start: 28, end: 36,
+      description: "EXAMPLE: The view pulls back from one panel to a wider workspace as two more feature cards settle into place.",
+      cutNote: "Cut → Cut · Pull out · Cards settle with a soft overshoot",
+      techniques: ["Pull out", "3D mockup"],
+      prompt: "EXAMPLE PROMPT — pull out from a single panel to a wider workspace, two more feature cards settle with a soft overshoot.",
+      filming: "No filming indicated",
+      estimatedNeeds: "EXAMPLE: 1 capture group — your screens or recordings",
+      recipe: [
+        { time: "0.0s", kind: "Camera", value: "Pull out begins" },
+        { time: "2.5s", kind: "UI", value: "Second card settles" },
+        { time: "4.5s", kind: "UI", value: "Third card settles" }
+      ]
+    },
+    {
+      id: 8, number: "08", sectionId: "s4", type: "CTA", kind: "Title card",
+      duration: "4.0s", start: 36, end: 40,
+      description: "EXAMPLE: A centered line assembles, with the offer set inside a rounded button that scales in, then the frame fades to black.",
+      cutNote: "Cut → Fade · Static · Button scales in, then hold",
+      techniques: ["Kinetic type"],
+      prompt: "EXAMPLE PROMPT — black frame, centered CTA line, offer inside a rounded button that scales in. Hold, fade to black. No extra UI.",
+      filming: "No filming indicated",
+      estimatedNeeds: "EXAMPLE: Your copy, URL and visual identity",
+      recipe: [
+        { time: "0.0s", kind: "Text", value: "“Start your”" },
+        { time: "0.6s", kind: "UI", value: "Offer button scales in" },
+        { time: "1.2s", kind: "Text", value: "“today.”" },
+        { time: "3.4s", kind: "Camera", value: "Fade to black" }
+      ]
+    }
+  ],
+  style: {
+    colors: [
+      { hex: "#0B0B0B", name: "Background", role: "EXAMPLE field" },
+      { hex: "#F5F5F5", name: "Headline", role: "EXAMPLE type" },
+      { hex: "#FE3F56", name: "Primary", role: "EXAMPLE accent" },
+      { hex: "#3697FF", name: "Accent", role: "EXAMPLE secondary" },
+      { hex: "#2D294B", name: "Deep", role: "EXAMPLE panel" }
+    ],
+    type: "EXAMPLE: Large white sans, regular-to-semibold weight. Headlines build word by word. UI labels stay small and sharp. No script or serif.",
+    uiTreatment: "EXAMPLE: 3D-tilted device mockups on a dark field, dashboards already populated, slow tilt and pull-out camera, rounded accent pills, no raw screen recordings.",
+    pacing: "EXAMPLE: Mid-tempo, about 5.0 s per scene (this sample is 8 scenes in 40 s). Title cards are shorter than UI demos. Hold the CTA about 4 seconds."
+  },
+  sound: {
+    voiceover: {
+      present: true,
+      notes: "EXAMPLE: Single narrator, calm mid-tempo, dry, sitting just over the music. Not a real transcript.",
+      lines: [
+        { time: "0:00", seconds: 0, text: "EXAMPLE — “you already have the data, you just cannot see it”" },
+        { time: "0:15", seconds: 15, text: "EXAMPLE — “see which channel actually closed the deal”" },
+        { time: "0:36", seconds: 36, text: "EXAMPLE — “start your free trial today”" }
+      ]
+    },
+    music: {
+      title: "EXAMPLE bed track (placeholder, not a licensed cue)",
+      notes: "EXAMPLE: ~110 BPM, soft pulse, rises slightly into the CTA, then tails out.",
+      cues: [
+        { time: "0:00", seconds: 0, text: "Bed starts, low" },
+        { time: "0:15", seconds: 15, text: "Slight lift under the first feature" },
+        { time: "0:36", seconds: 36, text: "Short rise, then tail out" }
+      ]
+    },
+    sfx: [
+      { time: "0:01.4", seconds: 1.4, name: "EXAMPLE Click — badge snap" },
+      { time: "0:05.1", seconds: 5.1, name: "EXAMPLE Soft pop — notification chip" },
+      { time: "0:21.0", seconds: 21.0, name: "EXAMPLE Click — cursor on filter" },
+      { time: "0:36.6", seconds: 36.6, name: "EXAMPLE Soft whoosh — CTA button" }
+    ]
+  }
+};
+
+/* ===== App (do not edit below this line when filling DATA) ===== */
+const ROLE_KEY = {
+  "hook": "hook",
+  "problem": "problem",
+  "product intro": "product_intro",
+  "product_intro": "product_intro",
+  "feature reveal": "feature_reveal",
+  "feature_reveal": "feature_reveal",
+  "demo": "demo",
+  "social proof": "social_proof",
+  "social_proof": "social_proof",
+  "pricing": "pricing",
+  "cta": "cta",
+  "outro": "outro",
+  "other": "other"
+};
+function roleColor(type) {
+  const key = ROLE_KEY[String(type || "other").toLowerCase()] || "other";
+  return `var(--role-${key})`;
+}
+function esc(s) {
+  return String(s ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+function fmtTime(sec) {
+  sec = Math.max(0, Number(sec) || 0);
+  const m = Math.floor(sec / 60);
+  const s = Math.floor(sec % 60);
+  const cs = Math.floor((sec % 1) * 100);
+  return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}:${String(cs).padStart(2, "0")}`;
+}
+function parseStamp(str, fallback) {
+  if (typeof fallback === "number") return fallback;
+  if (!str) return 0;
+  const m = String(str).trim().match(/^(\d+):(\d+)(?:\.(\d+))?$/);
+  if (m) return (+m[1]) * 60 + (+m[2]) + (m[3] ? Number("0." + m[3]) : 0);
+  const s = String(str).trim().match(/^(\d+(?:\.\d+)?)s$/);
+  if (s) return +s[1];
+  return parseFloat(str) || 0;
+}
+function toast(msg) {
+  const el = document.getElementById("toast");
+  el.textContent = msg;
+  el.classList.add("show");
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => el.classList.remove("show"), 1600);
+}
+
+const icons = {
+  bell: `<svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9.354 21c.705.622 1.632 1 2.646 1s1.94-.378 2.646-1M18 8A6 6 0 1 0 6 8c0 3.09-.78 5.206-1.65 6.605-.735 1.18-1.102 1.771-1.089 1.936.015.182.054.252.2.36.133.099.732.099 1.928.099H18.61c1.196 0 1.795 0 1.927-.098.147-.11.186-.179.2-.361.014-.165-.353-.755-1.088-1.936C18.78 13.206 18 11.09 18 8Z"/></svg>`,
+  bookmark: `<svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7.8c0-1.68 0-2.52.327-3.162a3 3 0 0 1 1.311-1.311C7.28 3 8.12 3 9.8 3h4.4c1.68 0 2.52 0 3.162.327a3 3 0 0 1 1.311 1.311C19 5.28 19 6.12 19 7.8V21l-7-4-7 4V7.8Z"/></svg>`,
+  chevron: `<svg class="chev" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>`,
+  link: `<svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="m12.708 18.364-1.415 1.414a5 5 0 1 1-7.07-7.07l1.413-1.415m12.728 1.414 1.415-1.414a5 5 0 0 0-7.071-7.071l-1.415 1.414M8.5 15.5l7-7"/></svg>`,
+  play: `<svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`
+};
+
+function renderHeader() {
+  const d = DATA;
+  const initial = (d.brand || d.title || "?").trim().charAt(0).toUpperCase();
+  const logo = d.brandLogo
+    ? `<img src="${esc(d.brandLogo)}" alt="" />`
+    : esc(initial);
+  document.title = d.title || "Video breakdown";
+  document.getElementById("header").innerHTML = `
+    <span class="brand-mark" aria-hidden="true">${logo}</span>
+    <div class="header-main">
+      <h1>${esc(d.title)}</h1>
+      <p class="meta">
+        <a class="brand-link" href="#">${esc(d.brand)}</a>
+        <button type="button" class="follow-btn" id="follow-btn" title="Follow ${esc(d.brand)}">${icons.bell} Follow</button>
+        <span class="dot-sep">·</span>${esc(d.date)}
+        <span class="dot-sep">·</span><span class="tabular">${esc(d.length)}</span>
+        ${d.aiAnnotated ? `<span class="dot-sep">·</span><span class="ai-flag" title="Scenes annotated by AI. Roles and scene bounds may contain errors.">AI-annotated</span>` : ""}
+      </p>
+      <p class="made">
+        <span class="q">made </span><span class="who">Team: ${esc(d.madeTeam)}</span>
+        <span class="dot-sep">·</span>
+        <span class="q">studio </span><span class="who">${esc(d.studio)}</span>
+      </p>
+      <dl class="stats">
+        <div class="stat"><dt>Length</dt><dd class="tabular">${esc(d.stats.length)}</dd></div>
+        <div class="stat"><dt>Scenes</dt><dd class="tabular">${esc(d.stats.scenes)}</dd></div>
+        <div class="stat"><dt>Product on screen</dt><dd class="tabular">${esc(d.stats.productOnScreen)}</dd></div>
+        <div class="stat"><dt>Features shown</dt><dd class="tabular">${esc(d.stats.featuresShown)}</dd></div>
+        <div class="stat"><dt>Call to action</dt><dd class="tabular">${esc(d.stats.callToAction)}</dd></div>
+        <div class="stat"><dt>Voiceover</dt><dd class="tabular">${esc(d.stats.voiceover)}</dd></div>
+      </dl>
+    </div>
+    <div class="header-actions">
+      <button type="button" class="icon-btn" id="copy-link" title="Copy source link" aria-label="Copy source link">${icons.link}</button>
+      <button type="button" class="save-btn" id="save-btn">${icons.bookmark} <span>Save</span></button>
+    </div>
+  `;
+}
+
+function renderLeft() {
+  const d = DATA;
+  const src = d.video && d.video.src ? d.video.src : "";
+  const poster = d.video && d.video.poster ? ` poster="${esc(d.video.poster)}"` : "";
+  const footage = d.footageNeeded
+    ? `<div class="footage"><div class="k">Footage needed</div><div class="v">${esc(d.footageNeeded)}</div></div>`
+    : "";
+  document.getElementById("left").innerHTML = `
+    <div class="player-wrap">
+      <video id="player" ${src ? `src="${esc(src)}"` : ""} ${poster} controls playsinline preload="metadata"></video>
+      <div class="player-placeholder${src ? "" : ""}" id="ph">
+        <div class="play-orb">${icons.play}</div>
+        <div class="ph-title">${src ? esc(d.title) : "EXAMPLE — no video src set"}</div>
+        <div class="ph-sub">${src ? "Click to play" : "Set DATA.video.src to a relative path next to this file"}</div>
+      </div>
+    </div>
+    <div class="timecode"><span class="now" id="tc-now">00:00:00</span><span class="dur" id="tc-dur"> / ${fmtTime(d.lengthSeconds)}</span></div>
+    <p class="overview">${d.overview || ""}</p>
+    ${footage}
+  `;
+}
+
+function sceneCard(sc, openRecipe) {
+  const chips = (sc.techniques || []).map((t) => `<span class="chip">${esc(t)}</span>`).join("");
+  const recipe = (sc.recipe || []).map((r, i) => `
+    <li class="recipe-item">
+      <button type="button" class="t" data-seek-rel="${esc(r.time)}" data-scene="${sc.id}">${esc(r.time)}</button>
+      <span class="k">${esc(r.kind)}</span>
+      <span class="v" title="${esc(r.value)}">${esc(r.value)}</span>
+    </li>`).join("");
+  return `
+    <li>
+      <article class="scene" data-scene="${sc.id}" id="scene-${sc.id}">
+        <div class="scene-top">
+          <button type="button" class="scene-num" data-goto="${sc.id}" aria-label="Play scene ${esc(sc.number)} from ${esc(fmtTime(sc.start).slice(0,5))}">${esc(sc.number)}</button>
+          <span class="scene-role"><span class="role-dot" style="--c:${roleColor(sc.type)}"></span>${esc(sc.type)}</span>
+          <span class="scene-kind">${esc(sc.kind)}</span>
+          <span class="scene-dur tabular">${esc(sc.duration)}</span>
+        </div>
+        <p class="scene-desc">${esc(sc.description)}</p>
+        ${sc.cutNote ? `<p class="scene-cut">${esc(sc.cutNote)}</p>` : ""}
+        <div class="scene-body">
+          <div class="chips">${chips}</div>
+          <div class="prompt-block">
+            <button type="button" class="ghost-btn copy-prompt" data-scene="${sc.id}">Copy prompt</button>
+            <div class="filming">
+              <div class="fk">${esc(sc.filming || "")}</div>
+              <div class="fv">${sc.estimatedNeeds ? "Estimated needs: " + esc(sc.estimatedNeeds) : ""}</div>
+            </div>
+          </div>
+          <div class="recipe-row">
+            <button type="button" class="ghost-btn recipe-toggle" data-scene="${sc.id}" aria-expanded="${openRecipe ? "true" : "false"}">Recipe</button>
+          </div>
+          <ul class="recipe-list${openRecipe ? " open" : ""}" id="recipe-${sc.id}">${recipe}</ul>
+        </div>
+      </article>
+    </li>`;
+}
+
+function renderScenes() {
+  const bySec = {};
+  for (const sc of DATA.scenes) {
+    (bySec[sc.sectionId] || (bySec[sc.sectionId] = [])).push(sc);
+  }
+  return `<ol class="sec-list">${DATA.sections.map((sec, i) => {
+    const scenes = bySec[sec.id] || [];
+    const open = i === 0;
+    const cards = scenes.map((sc, j) => sceneCard(sc, open && j === 0)).join("");
+    return `<li>
+      <button type="button" class="sec-head${open ? " open" : ""}" data-sec="${esc(sec.id)}" aria-expanded="${open}">
+        <span class="role-dot" style="--c:${roleColor(sec.type)}"></span>
+        <span class="name">${esc(sec.name)}</span>
+        <span class="type">${esc(sec.type)}</span>
+        <span class="meta-r tabular">${sec.scenesCount} scene${sec.scenesCount === 1 ? "" : "s"} · ${esc(sec.duration)}</span>
+        ${icons.chevron}
+      </button>
+      <ol class="scene-list${open ? "" : " hidden"}" id="sec-scenes-${esc(sec.id)}">${cards}</ol>
+    </li>`;
+  }).join("")}</ol>`;
+}
+
+function renderStructure() {
+  const total = DATA.lengthSeconds || DATA.scenes.reduce((a, s) => Math.max(a, s.end || 0), 1);
+  const blocks = DATA.scenes.map((sc) => {
+    const w = Math.max(0.4, ((sc.end - sc.start) / total) * 100);
+    return `<div class="tl-block" style="flex:${(sc.end - sc.start).toFixed(3)};background:${roleColor(sc.type)}" title="${esc(sc.number)} · ${esc(sc.type)} · ${esc(sc.duration)}" data-goto="${sc.id}"></div>`;
+  }).join("");
+  const used = [];
+  const seen = new Set();
+  for (const sc of DATA.scenes) {
+    const k = sc.type;
+    if (!seen.has(k)) { seen.add(k); used.push(k); }
+  }
+  const legend = used.map((t) => `<span><span class="role-dot" style="--c:${roleColor(t)}"></span>${esc(t)}</span>`).join("");
+  function shortTime(sec) {
+    sec = Math.max(0, Number(sec) || 0);
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return m + ":" + String(s).padStart(2, "0");
+  }
+  const rows = DATA.sections.map((sec, i) => `
+    <tr data-seek="${sec.start}">
+      <td class="idx">${i + 1}</td>
+      <td>
+        <div class="sec-name"><span class="role-dot" style="--c:${roleColor(sec.type)}"></span>${esc(sec.name)}</div>
+        <div class="sec-sub">${esc(sec.type)} · ${sec.scenesCount} scene${sec.scenesCount === 1 ? "" : "s"} · ${esc(sec.duration)} · ${shortTime(sec.start)}–${shortTime(sec.end)}</div>
+      </td>
+    </tr>`).join("");
+  return `<div class="struct">
+    <div class="timeline-wrap">
+      <div class="timeline-label"><span>0:00</span><span class="tabular">${esc(DATA.length)}</span></div>
+      <div class="timeline">${blocks}</div>
+      <div class="tl-legend">${legend}</div>
+    </div>
+    <table class="struct-table">
+      <tbody>${rows}</tbody>
+    </table>
+  </div>`;
+}
+
+function renderStyle() {
+  const s = DATA.style || {};
+  const swatches = (s.colors || []).map((c) => `
+    <div class="swatch">
+      <div class="chip-color" style="background:${esc(c.hex)}"></div>
+      <div class="hex">${esc(c.hex)}</div>
+      <div class="lab">${esc(c.name)}${c.role ? " · " + esc(c.role) : ""}</div>
+    </div>`).join("");
+  return `<div class="style-pad">
+    <div class="block-title">Color</div>
+    <div class="swatches">${swatches || `<p class="empty-hint">No colors in DATA.style.colors</p>`}</div>
+    <div class="style-row"><h3>Type</h3><p>${esc(s.type || "")}</p></div>
+    <div class="style-row"><h3>UI treatment</h3><p>${esc(s.uiTreatment || "")}</p></div>
+    <div class="style-row"><h3>Pacing</h3><p>${esc(s.pacing || "")}</p></div>
+  </div>`;
+}
+
+function renderSound() {
+  const s = DATA.sound || {};
+  const vo = s.voiceover || { present: false, notes: "", lines: [] };
+  const music = s.music || { title: "", notes: "", cues: [] };
+  const voLines = (vo.lines || []).map((l) => `
+    <li class="vo-item"><button type="button" class="t" data-seek="${l.seconds ?? parseStamp(l.time)}">${esc(l.time)}</button><span class="n">${esc(l.text)}</span></li>`).join("");
+  const cues = (music.cues || []).map((l) => `
+    <li class="vo-item"><button type="button" class="t" data-seek="${l.seconds ?? parseStamp(l.time)}">${esc(l.time)}</button><span class="n">${esc(l.text)}</span></li>`).join("");
+  const sfx = (s.sfx || []).map((l) => `
+    <li class="sfx-item"><button type="button" class="t" data-seek="${l.seconds ?? parseStamp(l.time)}">${esc(l.time)}</button><span class="n">${esc(l.name)}</span></li>`).join("");
+  return `<div class="sound-pad">
+    <div class="sound-sec">
+      <div class="block-title">Voiceover</div>
+      <h3>${vo.present ? "Yes" : "No"}</h3>
+      <p class="notes">${esc(vo.notes || "")}</p>
+      <ul class="vo-list">${voLines}</ul>
+    </div>
+    <div class="sound-sec">
+      <div class="block-title">Music</div>
+      <h3>${esc(music.title || "—")}</h3>
+      <p class="notes">${esc(music.notes || "")}</p>
+      <ul class="vo-list">${cues}</ul>
+    </div>
+    <div class="sound-sec">
+      <div class="block-title">SFX</div>
+      <ul class="sfx-list">${sfx || ""}</ul>
+    </div>
+  </div>`;
+}
+
+function renderRight() {
+  document.getElementById("right").innerHTML = `
+    <div class="tabs" role="tablist">
+      <button type="button" class="tab active" role="tab" aria-selected="true" data-tab="scenes">Scenes</button>
+      <button type="button" class="tab" role="tab" aria-selected="false" data-tab="structure">Structure</button>
+      <button type="button" class="tab" role="tab" aria-selected="false" data-tab="style">Style</button>
+      <button type="button" class="tab" role="tab" aria-selected="false" data-tab="sound">Sound</button>
+    </div>
+    <div class="tab-panel active" id="panel-scenes" role="tabpanel">${renderScenes()}</div>
+    <div class="tab-panel" id="panel-structure" role="tabpanel">${renderStructure()}</div>
+    <div class="tab-panel" id="panel-style" role="tabpanel">${renderStyle()}</div>
+    <div class="tab-panel" id="panel-sound" role="tabpanel">${renderSound()}</div>
+  `;
+}
+
+function seekTo(seconds, play) {
+  const v = document.getElementById("player");
+  if (!v) return;
+  const t = Math.max(0, Number(seconds) || 0);
+  try { v.currentTime = t; } catch (e) {}
+  highlightAt(t);
+  if (play && DATA.video && DATA.video.src) {
+    v.play().catch(() => {});
+  }
+}
+
+function highlightAt(t) {
+  let current = null;
+  for (const sc of DATA.scenes) {
+    if (t >= sc.start && t < sc.end) { current = sc; break; }
+  }
+  if (!current && DATA.scenes.length) {
+    const last = DATA.scenes[DATA.scenes.length - 1];
+    if (t >= last.start) current = last;
+  }
+  document.querySelectorAll(".scene.current").forEach((el) => el.classList.remove("current"));
+  if (current) {
+    const el = document.getElementById("scene-" + current.id);
+    if (el) {
+      el.classList.add("current");
+      const list = el.closest(".scene-list");
+      if (list && list.classList.contains("hidden")) {
+        list.classList.remove("hidden");
+        const head = list.previousElementSibling;
+        if (head) { head.classList.add("open"); head.setAttribute("aria-expanded", "true"); }
+      }
+      if (el._was !== current.id) {
+        const panel = document.getElementById("panel-scenes");
+        if (panel && panel.classList.contains("active")) {
+          const rect = el.getBoundingClientRect();
+          const prect = panel.getBoundingClientRect();
+          if (rect.top < prect.top + 8 || rect.bottom > prect.bottom - 8) {
+            el.scrollIntoView({ block: "nearest", behavior: "smooth" });
+          }
+        }
+      }
+    }
+  }
+  highlightAt._id = current ? current.id : null;
+}
+
+function bind() {
+  const v = document.getElementById("player");
+  const ph = document.getElementById("ph");
+  const tcNow = document.getElementById("tc-now");
+  const tcDur = document.getElementById("tc-dur");
+
+  if (v) {
+    const hidePh = () => { if (DATA.video && DATA.video.src) ph.classList.add("hide"); };
+    v.addEventListener("play", hidePh);
+    v.addEventListener("playing", hidePh);
+    v.addEventListener("loadeddata", () => {
+      if (v.videoWidth) hidePh();
+      if (v.duration && isFinite(v.duration)) tcDur.textContent = " / " + fmtTime(v.duration);
+    });
+    v.addEventListener("timeupdate", () => {
+      tcNow.textContent = fmtTime(v.currentTime);
+      highlightAt(v.currentTime);
+    });
+    v.addEventListener("error", () => {
+      ph.classList.remove("hide");
+      ph.querySelector(".ph-title").textContent = "Video could not be loaded";
+      ph.querySelector(".ph-sub").textContent = DATA.video.src || "Missing DATA.video.src";
+    });
+    if (!DATA.video || !DATA.video.src) {
+      ph.classList.remove("hide");
+    }
+  }
+
+  document.getElementById("follow-btn")?.addEventListener("click", (e) => {
+    const btn = e.currentTarget;
+    const on = btn.classList.toggle("is-on");
+    btn.innerHTML = icons.bell + (on ? " Following" : " Follow");
+  });
+  document.getElementById("save-btn")?.addEventListener("click", (e) => {
+    e.currentTarget.classList.toggle("is-saved");
+    toast("EXAMPLE — Save is a visual control in this template.");
+  });
+  document.getElementById("copy-link")?.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(location.href);
+      toast("Link copied");
+    } catch {
+      toast("Could not copy link");
+    }
+  });
+
+  document.getElementById("right").addEventListener("click", async (e) => {
+    const tab = e.target.closest(".tab");
+    if (tab) {
+      const name = tab.dataset.tab;
+      document.querySelectorAll(".tab").forEach((t) => {
+        t.classList.toggle("active", t === tab);
+        t.setAttribute("aria-selected", t === tab ? "true" : "false");
+      });
+      document.querySelectorAll(".tab-panel").forEach((p) => {
+        p.classList.toggle("active", p.id === "panel-" + name);
+      });
+      return;
+    }
+    const head = e.target.closest(".sec-head");
+    if (head) {
+      const open = head.classList.toggle("open");
+      head.setAttribute("aria-expanded", open ? "true" : "false");
+      const list = document.getElementById("sec-scenes-" + head.dataset.sec);
+      if (list) list.classList.toggle("hidden", !open);
+      return;
+    }
+    const copy = e.target.closest(".copy-prompt");
+    if (copy) {
+      const sc = DATA.scenes.find((s) => String(s.id) === String(copy.dataset.scene));
+      if (!sc) return;
+      try {
+        await navigator.clipboard.writeText(sc.prompt || "");
+        copy.classList.add("copied");
+        copy.textContent = "Copied";
+        toast("Prompt copied");
+        setTimeout(() => { copy.classList.remove("copied"); copy.textContent = "Copy prompt"; }, 1400);
+      } catch {
+        toast("Could not copy prompt");
+      }
+      e.stopPropagation();
+      return;
+    }
+    const rec = e.target.closest(".recipe-toggle");
+    if (rec) {
+      const list = document.getElementById("recipe-" + rec.dataset.scene);
+      const open = list.classList.toggle("open");
+      rec.setAttribute("aria-expanded", open ? "true" : "false");
+      e.stopPropagation();
+      return;
+    }
+    const rel = e.target.closest("[data-seek-rel]");
+    if (rel) {
+      const sc = DATA.scenes.find((s) => String(s.id) === String(rel.dataset.scene));
+      const extra = parseStamp(rel.dataset.seekRel);
+      seekTo((sc ? sc.start : 0) + extra, true);
+      e.stopPropagation();
+      return;
+    }
+    const abs = e.target.closest("[data-seek]");
+    if (abs) {
+      seekTo(abs.dataset.seek, true);
+      e.stopPropagation();
+      return;
+    }
+    const goto = e.target.closest("[data-goto]");
+    if (goto) {
+      const sc = DATA.scenes.find((s) => String(s.id) === String(goto.dataset.goto));
+      if (sc) seekTo(sc.start, true);
+      e.stopPropagation();
+      return;
+    }
+    const scene = e.target.closest(".scene");
+    if (scene) {
+      const sc = DATA.scenes.find((s) => String(s.id) === String(scene.dataset.scene));
+      if (sc) seekTo(sc.start, true);
+    }
+  });
+
+  highlightAt(0);
+}
+
+renderHeader();
+renderLeft();
+renderRight();
+bind();
+
+(function applyHashTab() {
+  const name = (location.hash || "").replace(/^#/, "");
+  if (!["scenes", "structure", "style", "sound"].includes(name)) return;
+  const tab = document.querySelector('.tab[data-tab="' + name + '"]');
+  if (tab) tab.click();
+})();
+  </script>
+</body>
+</html>
