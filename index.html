@@ -4,6 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SaaS Launch Video &amp; Motion Design | Pulse</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="theme-color" content="#1a1a1a" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Video Breakdown" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -177,6 +184,40 @@
     .save-btn:hover { filter: brightness(0.95); }
     .save-btn svg { width: 16px; height: 16px; opacity: 0.7; }
     .save-btn.is-saved { background: #e5e5e5; }
+    .upload-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 36px;
+      padding: 0 12px;
+      margin-right: 4px;
+      border-radius: 8px;
+      background: var(--btn);
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: inset 0 0 0 1px var(--border-strong);
+    }
+    .upload-btn:hover { background: var(--panel-hover); }
+    .upload-btn svg { width: 16px; height: 16px; }
+    #video-file { display: none; }
+    .player-wrap.drag-over {
+      box-shadow: inset 0 0 0 2px rgba(245, 245, 245, 0.55);
+    }
+    .player-wrap.drag-over::after {
+      content: "Drop video to play";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      background: rgba(0, 0, 0, 0.55);
+      color: var(--text);
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      z-index: 5;
+      pointer-events: none;
+    }
 
     /* ===== Layout ===== */
     .layout {
@@ -649,6 +690,7 @@
       <aside class="right" id="right"></aside>
     </div>
   </div>
+  <input type="file" id="video-file" accept="video/*" />
   <div class="toast" id="toast" role="status"></div>
 
   <script>
@@ -2588,7 +2630,8 @@ const icons = {
   bookmark: `<svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7.8c0-1.68 0-2.52.327-3.162a3 3 0 0 1 1.311-1.311C7.28 3 8.12 3 9.8 3h4.4c1.68 0 2.52 0 3.162.327a3 3 0 0 1 1.311 1.311C19 5.28 19 6.12 19 7.8V21l-7-4-7 4V7.8Z"/></svg>`,
   chevron: `<svg class="chev" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>`,
   link: `<svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="m12.708 18.364-1.415 1.414a5 5 0 1 1-7.07-7.07l1.413-1.415m12.728 1.414 1.415-1.414a5 5 0 0 0-7.071-7.071l-1.415 1.414M8.5 15.5l7-7"/></svg>`,
-  play: `<svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`
+  play: `<svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`,
+  upload: `<svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4m0 0 4.5 4.5M12 4 7.5 8.5"/><path d="M4 16.5V18a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1.5"/></svg>`
 };
 
 function renderHeader() {
@@ -2625,6 +2668,7 @@ function renderHeader() {
       </dl>
     </div>
     <div class="header-actions">
+      <button type="button" class="upload-btn" id="upload-btn" title="Upload a video from your computer" aria-label="Upload video">${icons.upload} <span>Upload video</span></button>
       <button type="button" class="icon-btn" id="copy-link" title="Copy source link" aria-label="Copy source link">${icons.link}</button>
       <button type="button" class="save-btn" id="save-btn">${icons.bookmark} <span>Save</span></button>
     </div>
@@ -2816,7 +2860,100 @@ function renderRight() {
 }
 
 const YT_STATE = { player: null, ready: false, pending: null, timer: null };
+const LOCAL_VIDEO = { active: false, url: null, name: null };
+
+function isVideoFile(file) {
+  if (!file) return false;
+  if (file.type && file.type.indexOf("video/") === 0) return true;
+  return /\.(mp4|webm|mov|mkv|m4v|avi|ogv|m4p|mpeg|mpg|3gp)$/i.test(file.name || "");
+}
+
+function teardownYouTube() {
+  clearInterval(YT_STATE.timer);
+  YT_STATE.timer = null;
+  YT_STATE.pending = null;
+  YT_STATE.ready = false;
+  if (YT_STATE.player) {
+    try { YT_STATE.player.destroy(); } catch (e) {}
+    YT_STATE.player = null;
+  }
+  window.onYouTubeIframeAPIReady = function () {};
+}
+
+function bindLocalPlayer() {
+  const v = document.getElementById("player");
+  const ph = document.getElementById("ph");
+  const tcNow = document.getElementById("tc-now");
+  const tcDur = document.getElementById("tc-dur");
+  if (!v || v.tagName !== "VIDEO") return;
+  const hidePh = () => {
+    if (!ph) return;
+    if (LOCAL_VIDEO.active || (DATA.video && DATA.video.src)) ph.classList.add("hide");
+  };
+  v.addEventListener("play", hidePh);
+  v.addEventListener("playing", hidePh);
+  v.addEventListener("loadedmetadata", () => {
+    if (v.duration && isFinite(v.duration) && tcDur) tcDur.textContent = " / " + fmtTime(v.duration);
+  });
+  v.addEventListener("loadeddata", () => {
+    if (v.videoWidth) hidePh();
+    if (v.duration && isFinite(v.duration) && tcDur) tcDur.textContent = " / " + fmtTime(v.duration);
+  });
+  v.addEventListener("timeupdate", () => {
+    if (tcNow) tcNow.textContent = fmtTime(v.currentTime);
+    highlightAt(v.currentTime);
+  });
+  v.addEventListener("error", () => {
+    if (!ph) return;
+    ph.classList.remove("hide");
+    const title = ph.querySelector(".ph-title");
+    const sub = ph.querySelector(".ph-sub");
+    if (title) title.textContent = "Video could not be loaded";
+    if (sub) sub.textContent = LOCAL_VIDEO.name || (DATA.video && DATA.video.src) || "Missing DATA.video.src";
+  });
+}
+
+function useLocalVideo(file) {
+  if (!isVideoFile(file)) {
+    toast("Please choose a video file");
+    return;
+  }
+  teardownYouTube();
+  if (LOCAL_VIDEO.url) {
+    try { URL.revokeObjectURL(LOCAL_VIDEO.url); } catch (e) {}
+  }
+  LOCAL_VIDEO.url = URL.createObjectURL(file);
+  LOCAL_VIDEO.name = file.name;
+  LOCAL_VIDEO.active = true;
+  const wrap = document.querySelector(".player-wrap");
+  if (!wrap) return;
+  wrap.classList.remove("drag-over");
+  wrap.innerHTML = "";
+  const v = document.createElement("video");
+  v.id = "player";
+  v.controls = true;
+  v.playsInline = true;
+  v.preload = "metadata";
+  v.src = LOCAL_VIDEO.url;
+  const ph = document.createElement("div");
+  ph.className = "player-placeholder";
+  ph.id = "ph";
+  ph.innerHTML = `<div class="play-orb">${icons.play}</div><div class="ph-title">${esc(file.name)}</div><div class="ph-sub">Click to play</div>`;
+  wrap.appendChild(v);
+  wrap.appendChild(ph);
+  const tcNow = document.getElementById("tc-now");
+  if (tcNow) tcNow.textContent = fmtTime(0);
+  highlightAt(0);
+  bindLocalPlayer();
+  v.play().catch(() => {});
+  toast("Playing " + file.name);
+}
+
 function ytStart(seconds) {
+  if (LOCAL_VIDEO.active) {
+    seekTo(seconds, true);
+    return;
+  }
   const poster = document.getElementById("yt-poster");
   const btn = document.getElementById("yt-poster-btn");
   if (poster) poster.remove();
@@ -2828,6 +2965,7 @@ function ytStart(seconds) {
   }
   YT_STATE.pending = seconds;
   const make = () => {
+    if (LOCAL_VIDEO.active) return;
     YT_STATE.player = new YT.Player("player", {
       videoId: DATA.video.youtubeId,
       playerVars: { autoplay: 1, playsinline: 1, rel: 0, modestbranding: 1, start: Math.floor(seconds) },
@@ -2858,19 +2996,25 @@ function ytStart(seconds) {
   }
 }
 function seekTo(seconds, play) {
+  const t0 = Math.max(0, Number(seconds) || 0);
+  highlightAt(t0);
+  const tcNow = document.getElementById("tc-now");
+  if (tcNow) tcNow.textContent = fmtTime(t0);
+  if (LOCAL_VIDEO.active) {
+    const v = document.getElementById("player");
+    if (!v || v.tagName !== "VIDEO") return;
+    try { v.currentTime = t0; } catch (e) {}
+    if (play) v.play().catch(() => {});
+    return;
+  }
   if (DATA.video && DATA.video.youtubeId) {
-    const t0 = Math.max(0, Number(seconds) || 0);
-    highlightAt(t0);
-    document.getElementById("tc-now").textContent = fmtTime(t0);
     if (play) ytStart(t0);
     else if (YT_STATE.ready) YT_STATE.player.seekTo(t0, true);
     return;
   }
   const v = document.getElementById("player");
-  if (!v) return;
-  const t = Math.max(0, Number(seconds) || 0);
-  try { v.currentTime = t; } catch (e) {}
-  highlightAt(t);
+  if (!v || v.tagName !== "VIDEO") return;
+  try { v.currentTime = t0; } catch (e) {}
   if (play && DATA.video && DATA.video.src) {
     v.play().catch(() => {});
   }
@@ -2914,31 +3058,53 @@ function highlightAt(t) {
 function bind() {
   const v = document.getElementById("player");
   const ph = document.getElementById("ph");
-  const tcNow = document.getElementById("tc-now");
-  const tcDur = document.getElementById("tc-dur");
 
   document.getElementById("yt-poster-btn")?.addEventListener("click", () => ytStart(0));
   if (v && v.tagName === "VIDEO") {
-    const hidePh = () => { if (DATA.video && DATA.video.src) ph.classList.add("hide"); };
-    v.addEventListener("play", hidePh);
-    v.addEventListener("playing", hidePh);
-    v.addEventListener("loadeddata", () => {
-      if (v.videoWidth) hidePh();
-      if (v.duration && isFinite(v.duration)) tcDur.textContent = " / " + fmtTime(v.duration);
-    });
-    v.addEventListener("timeupdate", () => {
-      tcNow.textContent = fmtTime(v.currentTime);
-      highlightAt(v.currentTime);
-    });
-    v.addEventListener("error", () => {
-      ph.classList.remove("hide");
-      ph.querySelector(".ph-title").textContent = "Video could not be loaded";
-      ph.querySelector(".ph-sub").textContent = DATA.video.src || "Missing DATA.video.src";
-    });
+    bindLocalPlayer();
     if (!DATA.video || !DATA.video.src) {
-      ph.classList.remove("hide");
+      if (ph) ph.classList.remove("hide");
     }
   }
+
+  const fileInput = document.getElementById("video-file");
+  document.getElementById("upload-btn")?.addEventListener("click", () => fileInput && fileInput.click());
+  fileInput?.addEventListener("change", (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (file) useLocalVideo(file);
+    e.target.value = "";
+  });
+
+  const left = document.getElementById("left");
+  const endDrag = (wrap) => { if (wrap) wrap.classList.remove("drag-over"); };
+  left?.addEventListener("dragenter", (e) => {
+    const wrap = e.target.closest(".player-wrap");
+    if (!wrap) return;
+    e.preventDefault();
+    wrap.classList.add("drag-over");
+  });
+  left?.addEventListener("dragover", (e) => {
+    const wrap = e.target.closest(".player-wrap") || left.querySelector(".player-wrap.drag-over");
+    if (!wrap) return;
+    e.preventDefault();
+    if (e.dataTransfer) e.dataTransfer.dropEffect = "copy";
+    wrap.classList.add("drag-over");
+  });
+  left?.addEventListener("dragleave", (e) => {
+    const wrap = left.querySelector(".player-wrap");
+    if (!wrap) return;
+    if (!wrap.contains(e.relatedTarget)) endDrag(wrap);
+  });
+  left?.addEventListener("drop", (e) => {
+    const wrap = e.target.closest(".player-wrap") || left.querySelector(".player-wrap");
+    if (!wrap) return;
+    e.preventDefault();
+    endDrag(wrap);
+    const file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+    if (!file) return;
+    if (isVideoFile(file)) useLocalVideo(file);
+    else toast("Please drop a video file");
+  });
 
   document.getElementById("follow-btn")?.addEventListener("click", (e) => {
     const btn = e.currentTarget;
@@ -3038,6 +3204,10 @@ renderHeader();
 renderLeft();
 renderRight();
 bind();
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js").catch(() => {});
+}
 
 (function applyHashTab() {
   const name = (location.hash || "").replace(/^#/, "");
